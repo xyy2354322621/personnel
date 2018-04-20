@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xyy.dao.TouristMapper">
+    <insert id="addTourist">
+        INSERT INTO T_TOURIST VALUES (#{tourist_no},#{pass})
+    </insert>
+    <select id="getTourist" resultType="com.xyy.model.Tourist">
+        SELECT * FROM T_TOURIST WHERE "tourist_no"=#{tourist_no}
+    </select>
+    <select id="getLoginTourist" resultType="com.xyy.model.Tourist">
+        SELECT * FROM T_TOURIST WHERE "tourist_no"=#{tourist_no} and "pass"=#{pass}
+    </select>
+</mapper>
