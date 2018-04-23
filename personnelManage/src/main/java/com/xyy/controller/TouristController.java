@@ -4,7 +4,6 @@ import com.xyy.biz.TouristService;
 import com.xyy.model.Tourist;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
@@ -64,8 +63,9 @@ public class TouristController {
         Tourist existTourist = touristService.getLoginTourist(tourist);
         response.setContentType("text/html;charset=utf-8");
         if(existTourist!=null){
+            session.setAttribute("tourist",existTourist);
             response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('登录成功'));" +
-                    "window.location.href='gotoTouristHome';</script>");
+                    "window.location.href='recruit';</script>");
         }else {
             response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('账号或密码错误'));" +
                     "window.location.href='gotoTouristLogin';</script>");
@@ -75,6 +75,6 @@ public class TouristController {
     @RequestMapping("/gotoVisit")
     public String gotoVisit()throws Exception{
         System.out.println("直接过来");
-        return "index";
+        return "/eLogin.jsp";
     }
 }

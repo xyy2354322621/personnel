@@ -1,3 +1,10 @@
+<%--
+  Created by IntelliJ IDEA.
+  User: xiyueyang
+  Date: 2018/4/20 0020
+  Time: 20:03
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     String path = request.getContextPath();
@@ -9,12 +16,9 @@
     <title></title>
 </head>
 <body>
- <p>
-     欢迎访问人事管理系统
-     <a href="gotoEmployeeLogin">员工登录</a>
-     <a href="gotoTouristLogin">游客登录</a>
-     <a href="gotoTouristRegister">游客注册</a>
-     <a href="touristVisit">游客访问</a>
- </p>
+<a href="createRecruit">发布招聘</a>
+<a href="gotoEmployeeHome">返回</a>
+
+
 </body>
 </html>

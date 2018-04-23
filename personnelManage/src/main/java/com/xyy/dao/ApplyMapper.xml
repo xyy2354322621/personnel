@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xyy.dao.ApplyMapper">
+    <insert id="addApply">
+        INSERT INTO T_APPLY("apply_no","resume_no","recruit_no","apply_time","isread","exist")
+        VALUES (APPLY_SEQ.nextval,#{resume_no},#{recruit_no},to_date(#{apply_time},'yyyy-mm-dd hh24:mi:ss'),#{isRead},#{exist})
+    </insert>
+    <select id="getRepeatApply" resultType="com.xyy.model.Apply">
+        SELECT A.* FROM T_APPLY A,T_RESUME R,T_TOURIST T
+        WHERE T."tourist_no"=#{param2.tourist_no} and T."tourist_no"=R."tourist_no"
+        and A."resume_no"=R."resume_no" AND A."recruit_no"=#{param1.recruit_no}
+    </select>
+</mapper>

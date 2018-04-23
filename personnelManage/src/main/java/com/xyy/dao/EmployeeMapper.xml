@@ -2,6 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xyy.dao.EmployeeMapper">
     <select id="getEmployee" resultType="com.xyy.model.Employee">
-        SELECT * FROM T_EMPLOYEE WHERE "e_id"=#{e_id}
+        SELECT * FROM T_EMPLOYEE WHERE "e_id"=#{e_id} and "dimission_time" is null
+    </select>
+    <select id="getEmployees" resultType="com.xyy.model.Employee">
+        SELECT * FROM T_EMPLOYEE WHERE "dimission_time" IS NULL
     </select>
 </mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xyy.dao.PositionMapper">
+    <insert id="addPosition">
+        INSERT INTO T_POSITION VALUES (POSITION_SEQ.nextval,#{pos_name},#{depart_no},#{basic_salary},#{exist})
+    </insert>
+    <update id="updatePosition">
+        UPDATE T_POSITION SET "pos_name"=#{pos_name},"basic_salary"=#{basic_salary} where "pos_no"=#{pos_no}
+    </update>
+    <update id="updateDiscardPosition">
+        UPDATE T_POSITION SET "exist"=0 WHERE "pos_no"=#{pos_no}
+    </update>
+    <update id="updateRecoverPosition">
+        UPDATE T_POSITION SET "exist"=1 WHERE "pos_no"=#{pos_no}
+    </update>
+    <delete id="deletePosition">
+        DELETE FROM T_POSITION WHERE "pos_no"=#{pos_no}
+    </delete>
+    <select id="getPosition" resultType="com.xyy.model.Position">
+        SELECT * FROM T_POSITION WHERE "depart_no"=#{depart_no} and "pos_name"=#{pos_name}
+    </select>
+    <select id="getPositions" resultType="com.xyy.model.Position">
+        SELECT P.*,D."depart_name" FROM T_POSITION P ,T_DEPARTMENT D WHERE P."depart_no"=D."depart_no" AND P."exist"=1
+    </select>
+    <select id="getUsingPosition" resultType="com.xyy.model.Position">
+        SELECT P.* FROM T_POSITION P ,T_EMPLOYEE E WHERE E."pos_no"=P."pos_no" AND P."pos_no"=#{pos_no}
+    </select>
+</mapper>

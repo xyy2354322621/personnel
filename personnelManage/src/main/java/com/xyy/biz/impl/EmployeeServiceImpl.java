@@ -6,6 +6,7 @@ import com.xyy.model.Employee;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * Created by xiyueyang on 2018/4/20 0020.
@@ -18,5 +19,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee getEmployee(Employee employee) {
         return employeeMapper.getEmployee(employee);
+    }
+
+    @Override
+    public List<Employee> getEmployees() {
+        return employeeMapper.getEmployees();
     }
 }

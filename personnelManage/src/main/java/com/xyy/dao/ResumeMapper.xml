@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xyy.dao.ResumeMapper">
+    <insert id="addResume">
+        INSERT INTO T_RESUME VALUES (RESUME_SEQ.nextval,#{tourist_no},#{tourist_name},#{birthday},#{id_no},
+        #{phone},#{email},#{introduction},#{education},#{exist},#{gender})
+</insert>
+    <update id="updateResume">
+        UPDATE T_RESUME SET "tourist_name"=#{tourist_name},"birthday"=to_date(#{birthday},'yyyy-mm-dd hh24:mi:ss'),
+        "id_no"=#{id_no},"phone"=#{phone},"email"=#{email},"introduction"=#{introduction},"gender"=#{gender}
+        where "resume_no"=#{resume_no}
+    </update>
+    <update id="updateVirtualDeleteResume">
+        UPDATE T_RESUME SET "exist"=0 WHERE "resume_no"=#{resume_no}
+    </update>
+    <delete id="deleteResume">
+        DELETE FROM T_RESUME WHERE "resume_no"=#{resume_no}
+    </delete>
+    <select id="getMyResume" resultType="com.xyy.model.Resume">
+        SELECT * from T_RESUME WHERE "tourist_no"=#{tourist_no} and "exist"=1
+    </select>
+    <select id="getUsingResume" resultType="com.xyy.model.Resume">
+        SELECT R.* from T_RESUME R ,T_APPLY A where R."resume_no"=#{resume_no}
+        and R."resume_no"=A."resume_no" and A."exist"=1
+    </select>
+</mapper>

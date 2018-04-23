@@ -15,6 +15,8 @@ public class Employee {
     private String entry_time;
     private String dimission_time;
     private String education;
+    private String dimission_reason;
+
 
     public String getE_id() {
         return e_id;
@@ -102,5 +104,13 @@ public class Employee {
 
     public void setEducation(String education) {
         this.education = education;
+    }
+
+    public String getDimission_reason() {
+        return dimission_reason;
+    }
+
+    public void setDimission_reason(String dimission_reason) {
+        this.dimission_reason = dimission_reason;
     }
 }

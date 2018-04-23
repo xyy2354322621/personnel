@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xyy.dao.DepartmentMapper">
+    <insert id="addDepartment">
+        INSERT INTO T_DEPARTMENT VALUES (DEPART_SEQ.nextval,#{depart_name},#{depart_location},#{exist},to_date(#{create_time},'yyyy-mm-dd hh24:mi:ss'))
+    </insert>
+    <update id="updateDepartment">
+        UPDATE T_DEPARTMENT SET "depart_name"=#{depart_name},"depart_location"=#{depart_location}
+        where "depart_no"=#{depart_no}
+    </update>
+    <select id="getDepartment" resultType="com.xyy.model.Department">
+        SELECT * FROM T_DEPARTMENT WHERE "depart_name"=#{depart_name}
+    </select>
+    <select id="getDepartments" resultType="com.xyy.model.Department">
+        SELECT * FROM T_DEPARTMENT WHERE "exist" != 0
+    </select>
+</mapper>

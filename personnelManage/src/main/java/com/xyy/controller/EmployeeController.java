@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * Created by xiyueyang on 2018/4/20 0020.
@@ -48,10 +49,18 @@ public class EmployeeController {
                 session.setAttribute("employee",employee);
                 response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('登录成功'));" +
                         "window.location.href='gotoEmployeeHome';</script>");
+                response.sendRedirect("gotoEmployeeHome");
             }else {
                 response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('账号或密码错误'));" +
                         "window.location.href='gotoEmployeeLogin';</script>");
             }
         }
+    }
+
+    @RequestMapping("/manageEmployee")
+    public String manageEmployee(HttpSession session)throws Exception{
+        List<Employee> employees = employeeService.getEmployees();
+        session.setAttribute("employees",employees);
+        return "manageEmployee";
     }
 }
