@@ -1,6 +1,7 @@
 package com.xyy.controller;
 
 import com.xyy.biz.ResumeService;
+import com.xyy.model.Apply;
 import com.xyy.model.Resume;
 import com.xyy.model.Tourist;
 import org.springframework.stereotype.Controller;
@@ -146,6 +147,5 @@ public class ResumeController {
         }
         return resume;
     }
-
 
 }

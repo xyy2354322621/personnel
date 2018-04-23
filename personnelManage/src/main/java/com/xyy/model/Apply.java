@@ -13,6 +13,7 @@ public class Apply {
     private String interview;
     private String hire;
     private int exist;
+    private String interview_info;
 
     public long getApply_no() {
         return apply_no;
@@ -84,5 +85,13 @@ public class Apply {
 
     public void setExist(int exist) {
         this.exist = exist;
+    }
+
+    public String getInterview_info() {
+        return interview_info;
+    }
+
+    public void setInterview_info(String interview_info) {
+        this.interview_info = interview_info;
     }
 }

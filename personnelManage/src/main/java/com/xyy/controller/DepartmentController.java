@@ -1,6 +1,8 @@
 package com.xyy.controller;
 
+import com.xyy.biz.ApplyService;
 import com.xyy.biz.DepartmentService;
+import com.xyy.model.Apply;
 import com.xyy.model.Department;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +22,9 @@ public class DepartmentController {
 
     @Resource
     private DepartmentService departmentService;
+
+    @Resource
+    private ApplyService applyService;
 
     @RequestMapping("/gotoManageDepartment")
     public String gotoManageDepartment()throws Exception{
@@ -100,4 +105,15 @@ public class DepartmentController {
     public String gotoAlterDepartment()throws Exception{
         return "alterDepartment";
     }
+
+    @RequestMapping("/hireApply")
+    public String hireApply(Apply apply, HttpSession session)throws Exception{
+        applyService.updateSetHireApply(apply);
+        session.setAttribute("hireApply",apply);
+        List<Department> departments = departmentService.getDepartmentsAndPosition();
+        session.setAttribute("departmentPosition",departments);
+        return "assignPosition";
+    }
+
+
 }

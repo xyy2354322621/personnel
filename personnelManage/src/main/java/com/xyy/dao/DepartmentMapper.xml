@@ -14,4 +14,16 @@
     <select id="getDepartments" resultType="com.xyy.model.Department">
         SELECT * FROM T_DEPARTMENT WHERE "exist" != 0
     </select>
+    <select id="getDepartmentsAndPosition" resultMap="departmentPosition">
+        SELECT * FROM T_DEPARTMENT D ,T_POSITION P WHERE D."depart_no"=P."depart_no"
+        AND D."exist"=1 AND P."exist"=1
+    </select>
+    <resultMap id="departmentPosition" type="Department">
+        <id property="depart_no" column="depart_no"/>
+        <result property="depart_name" column="depart_name"/>
+        <collection property="positionSet" ofType="Position">
+            <id property="pos_no" column="pos_no"/>
+            <result property="pos_name" column="pos_name"/>
+        </collection>
+    </resultMap>
 </mapper>

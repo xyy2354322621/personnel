@@ -12,4 +12,13 @@ public interface RecruitMapper {
 
     List<Recruit> getIssuingRecruits();
 
+    List<Recruit> getRecruits();
+
+    boolean updatePauseIssueRecruit(Recruit recruit);
+
+    boolean updateRecoverIssueRecruit(Recruit recruit);
+
+    boolean updateRecruit(Recruit recruit);
+
+    boolean deleteRecruit(Recruit recruit);
 }

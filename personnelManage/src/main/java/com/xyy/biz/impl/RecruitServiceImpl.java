@@ -26,4 +26,31 @@ public class RecruitServiceImpl implements RecruitService {
     public List<Recruit> getIssuingRecruits() {
         return recruitMapper.getIssuingRecruits();
     }
+
+    @Override
+    public List<Recruit> getRecruits() {
+        return recruitMapper.getRecruits();
+    }
+
+    @Override
+    public boolean updatePauseIssueRecruit(Recruit recruit) {
+        return recruitMapper. updatePauseIssueRecruit( recruit);
+    }
+
+    @Override
+    public boolean updateRecoverIssueRecruit(Recruit recruit) {
+        return recruitMapper.updateRecoverIssueRecruit( recruit);
+    }
+
+    @Override
+    public boolean updateRecruit(Recruit recruit) {
+        return recruitMapper.updateRecruit(recruit);
+    }
+
+    @Override
+    public boolean deleteRecruit(Recruit recruit) {
+        return recruitMapper.deleteRecruit( recruit);
+    }
+
+
 }

@@ -1,8 +1,11 @@
 package com.xyy.controller;
 
 import com.xyy.biz.EmployeeService;
+import com.xyy.biz.ResumeService;
 import com.xyy.biz.TouristService;
 import com.xyy.model.Employee;
+import com.xyy.model.Position;
+import com.xyy.model.Resume;
 import com.xyy.model.Tourist;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +26,9 @@ public class EmployeeController {
 
     @Resource
     private TouristService touristService;
+
+    @Resource
+    private ResumeService resumeService;
 
     @RequestMapping("/gotoEmployeeLogin")
     public String gotoEmployeeLogin()throws Exception{
@@ -62,5 +68,10 @@ public class EmployeeController {
         List<Employee> employees = employeeService.getEmployees();
         session.setAttribute("employees",employees);
         return "manageEmployee";
+    }
+
+    @RequestMapping("/hireEmployee")
+    public void hireEmployee(Position position,HttpServletResponse response)throws Exception{
+        Resume resume =
     }
 }

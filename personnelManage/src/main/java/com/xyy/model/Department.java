@@ -1,5 +1,8 @@
 package com.xyy.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by xiyueyang on 2018/4/20 0020.
  */
@@ -9,6 +12,7 @@ public class Department {
     private String depart_location;
     private int exist;
     private String create_time;
+    private Set<Position> positionSet = new HashSet<>();
 
     public long getDepart_no() {
         return depart_no;
@@ -48,5 +52,13 @@ public class Department {
 
     public void setCreate_time(String create_time) {
         this.create_time = create_time;
+    }
+
+    public Set<Position> getPositionSet() {
+        return positionSet;
+    }
+
+    public void setPositionSet(Set<Position> positionSet) {
+        this.positionSet = positionSet;
     }
 }

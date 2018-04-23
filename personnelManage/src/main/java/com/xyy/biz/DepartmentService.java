@@ -1,5 +1,6 @@
 package com.xyy.biz;
 
+import com.xyy.model.Apply;
 import com.xyy.model.Department;
 
 import java.util.List;
@@ -15,4 +16,7 @@ public interface DepartmentService {
     List<Department> getDepartments();
 
     boolean updateDepartment(Department alterDepartment);
+
+    List<Department> getDepartmentsAndPosition();
+
 }

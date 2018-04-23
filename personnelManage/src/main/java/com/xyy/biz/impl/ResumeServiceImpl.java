@@ -48,4 +48,9 @@ public class ResumeServiceImpl implements ResumeService {
         return resumeMapper.updateVirtualDeleteResume(resume);
     }
 
+    @Override
+    public Resume getResume(Resume resume) {
+        return resumeMapper.getResume(resume);
+    }
+
 }

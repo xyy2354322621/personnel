@@ -23,4 +23,7 @@
         SELECT R.* from T_RESUME R ,T_APPLY A where R."resume_no"=#{resume_no}
         and R."resume_no"=A."resume_no" and A."exist"=1
     </select>
+    <select id="getResume" resultType="com.xyy.model.Resume">
+         SELECT * from T_RESUME WHERE "resume_no"=#{resume_no}
+    </select>
 </mapper>

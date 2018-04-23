@@ -15,4 +15,7 @@ public interface DepartmentMapper {
     List<Department> getDepartments();
 
     boolean updateDepartment(Department alterDepartment);
+
+    List<Department> getDepartmentsAndPosition();
+
 }

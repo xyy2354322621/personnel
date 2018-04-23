@@ -5,9 +5,48 @@
         INSERT INTO T_APPLY("apply_no","resume_no","recruit_no","apply_time","isread","exist")
         VALUES (APPLY_SEQ.nextval,#{resume_no},#{recruit_no},to_date(#{apply_time},'yyyy-mm-dd hh24:mi:ss'),#{isRead},#{exist})
     </insert>
+    <update id="updateInvite">
+        UPDATE T_APPLY SET "invite"='已邀请',"interview_info"=#{interview_info} WHERE "apply_no"=#{apply_no}
+    </update>
+    <update id="updateCancerInvite">
+        UPDATE T_APPLY SET "invite"='未邀请',"interview_info"=NULL WHERE "apply_no"=#{apply_no}
+    </update>
+    <update id="updateRefuseApply">
+        UPDATE T_APPLY SET "invite"='拒绝申请',"interview_info"=NULL WHERE "apply_no"=#{apply_no}
+    </update>
+    <update id="updateDeleteApply">
+        UPDATE T_APPLY SET "exist"=0,"invite"='拒绝申请',"interview_info"=NULL WHERE "apply_no"=#{apply_no}
+    </update>
+    <update id="updateSuccessInterview">
+        UPDATE T_APPLY SET "interview"='面试成功' WHERE "apply_no"=#{apply_no}
+    </update>
+    <update id="updateFailInterview">
+        UPDATE T_APPLY SET "interview"='面试失败' WHERE "apply_no"=#{apply_no}
+    </update>
+    <update id="updateSetRead">
+        UPDATE T_APPLY SET "isread"='已阅读' WHERE "apply_no"=#{apply_no}
+    </update>
+    <update id="updateAgreeInvite">
+        UPDATE T_APPLY SET "invite"='同意邀请' WHERE "apply_no"=#{apply_no}
+    </update>
+    <update id="updateRefuseInvite">
+        UPDATE T_APPLY SET "invite"='拒绝邀请' WHERE "apply_no"=#{apply_no}
+    </update>
+    <update id="updateSetHireApply">
+        UPDATE T_APPLY SET "hire"='录用' WHERE "apply_no"=#{apply_no}
+    </update>
+    <delete id="deleteApply">
+        DELETE FROM T_APPLY WHERE "apply_no"=#{apply_no}
+    </delete>
     <select id="getRepeatApply" resultType="com.xyy.model.Apply">
         SELECT A.* FROM T_APPLY A,T_RESUME R,T_TOURIST T
         WHERE T."tourist_no"=#{param2.tourist_no} and T."tourist_no"=R."tourist_no"
         and A."resume_no"=R."resume_no" AND A."recruit_no"=#{param1.recruit_no}
+    </select>
+    <select id="getApplies" resultType="com.xyy.model.Apply">
+        SELECT * FROM T_APPLY WHERE "recruit_no"=#{recruit_no} and "exist"=1
+    </select>
+    <select id="getMyApplies" resultType="com.xyy.model.Apply">
+        SELECT A.* FROM T_APPLY A ,T_RESUME R WHERE R."resume_no"=A."resume_no" AND R."tourist_no"=#{tourist_no}
     </select>
 </mapper>

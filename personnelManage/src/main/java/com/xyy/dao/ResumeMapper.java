@@ -20,4 +20,6 @@ public interface ResumeMapper {
     boolean deleteResume(Resume resume);
 
     boolean updateVirtualDeleteResume(Resume resume);
+
+    Resume getResume(Resume resume);
 }
