@@ -72,6 +72,6 @@ public class EmployeeController {
 
     @RequestMapping("/hireEmployee")
     public void hireEmployee(Position position,HttpServletResponse response)throws Exception{
-        Resume resume =
+//        Resume resume =
     }
 }
