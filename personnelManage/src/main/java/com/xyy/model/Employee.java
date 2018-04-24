@@ -14,8 +14,13 @@ public class Employee {
     private String grade;
     private String entry_time;
     private String dimission_time;
+    private String id_no;
     private String education;
     private String dimission_reason;
+    private String state;
+    private String depart_name;
+    private String pos_name;
+
 
 
     public String getE_id() {
@@ -113,4 +118,37 @@ public class Employee {
     public void setDimission_reason(String dimission_reason) {
         this.dimission_reason = dimission_reason;
     }
+
+    public String getId_no() {
+        return id_no;
+    }
+
+    public void setId_no(String id_no) {
+        this.id_no = id_no;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getDepart_name() {
+        return depart_name;
+    }
+
+    public void setDepart_name(String depart_name) {
+        this.depart_name = depart_name;
+    }
+
+    public String getPos_name() {
+        return pos_name;
+    }
+
+    public void setPos_name(String pos_name) {
+        this.pos_name = pos_name;
+    }
+
 }

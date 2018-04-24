@@ -1,5 +1,8 @@
 package com.xyy.model;
 
+import java.util.Set;
+import java.util.TreeSet;
+
 /**
  * Created by xiyueyang on 2018/4/20 0020.
  */
@@ -10,6 +13,7 @@ public class Position {
     private long depart_no;
     private long basic_salary;
     private int exist;
+    private Set<Employee> employeeSet = new TreeSet<>();
 
     public long getPos_no() {
         return pos_no;
@@ -57,5 +61,25 @@ public class Position {
 
     public void setExist(int exist) {
         this.exist = exist;
+    }
+
+    public Set<Employee> getEmployeeSet() {
+        return employeeSet;
+    }
+
+    public void setEmployeeSet(Set<Employee> employeeSet) {
+        this.employeeSet = employeeSet;
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "pos_no=" + pos_no +
+                ", pos_name='" + pos_name + '\'' +
+                ", depart_name='" + depart_name + '\'' +
+                ", depart_no=" + depart_no +
+                ", basic_salary=" + basic_salary +
+                ", exist=" + exist +
+                '}';
     }
 }

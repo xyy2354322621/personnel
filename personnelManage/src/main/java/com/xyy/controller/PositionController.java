@@ -148,17 +148,33 @@ public class PositionController {
         response.setContentType("text/html;charset=utf-8");
         Position usingPosition = positionService.getUsingPosition(position);
         if (usingPosition==null){
-            if(positionService.deletePosition(position)){
-                response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('职位删除成功'));" +
-                        "window.location.href='managePosition';</script>");
-            }else {
-                response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('职位删除失败，请重试'));" +
-                        "window.location.href='managePosition';</script>");
-            }
+            response.getWriter().write("<script language='javascript'>if( confirm(decodeURIComponent('确定要删除吗？'))){" +
+                    "window.location.href ='confirmDeletePosition?=pos_no"+position.getPos_no()+"';}else {window.location.href ='managePosition';} </script>");
+
         }else {
             response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('该职位下尚有员工，不可删除'));" +
                     "window.location.href='managePosition';</script>");
         }
 
+
+
+    }
+
+    @RequestMapping("/confirmDeletePosition")
+    public void confirmDeletePosition(Position position,HttpServletResponse response)throws Exception {
+        response.setContentType("text/html;charset=utf-8");
+        Position usingPosition = positionService.getUsingPosition(position);
+        if (usingPosition == null) {
+            if (positionService.deletePosition(position)) {
+                response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('职位删除成功'));" +
+                        "window.location.href='managePosition';</script>");
+            } else {
+                response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('职位删除失败，请重试'));" +
+                        "window.location.href='managePosition';</script>");
+            }
+        } else {
+            response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('该职位下尚有员工，不可删除'));" +
+                    "window.location.href='managePosition';</script>");
+        }
     }
 }

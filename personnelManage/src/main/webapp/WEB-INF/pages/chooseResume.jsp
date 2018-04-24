@@ -25,7 +25,7 @@
         <tr>
             <th>简历编号</th><th>姓名</th><th>生日</th>
             <th>身份证号</th><th>手机号</th><th>电子邮箱</th>
-            <th>教育背景</th><th>个人履历简绍</th><th>选择</th>
+            <th>教育背景</th><th>个人履历简绍</th><th>投递</th>
         </tr>
         <c:forEach items="${sessionScope.myResumes}" var="resume">
             <tr>

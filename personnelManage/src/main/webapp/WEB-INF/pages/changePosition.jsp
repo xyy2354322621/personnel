@@ -2,8 +2,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: xiyueyang
-  Date: 2018/4/23 0023
-  Time: 15:34
+  Date: 2018/4/24 0024
+  Time: 14:16
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -19,21 +19,21 @@
         function departSelect(data) {
             <c:forEach items="${sessionScope.departmentPosition}" var="department">
             if(data.value==${department.depart_no}){
-                    var posSelect = document.getElementById("posSelect");
-                    posSelect.options.length=0;
-                    <c:forEach items="${department.positionSet}" var="position">
-                        var posOpt = document.createElement("option");
-                        posOpt.value=${position.pos_no};
-                        posOpt.innerHTML="${position.pos_name}";
-                        posSelect.appendChild(posOpt);
-                    </c:forEach>
-                }
+                var posSelect = document.getElementById("posSelect");
+                posSelect.options.length=0;
+                <c:forEach items="${department.positionSet}" var="position">
+                var posOpt = document.createElement("option");
+                posOpt.value=${position.pos_no};
+                posOpt.innerHTML="${position.pos_name}";
+                posSelect.appendChild(posOpt);
+                </c:forEach>
+            }
             </c:forEach>
         }
     </script>
 </head>
 <body>
-<form method="post" action="hireEmployee">
+<form method="post" action="confirmPosition">
     部门：<select id="dpt" onchange="departSelect(this)">
         <c:forEach items="${sessionScope.departmentPosition}" var="depart">
             <option value="${depart.depart_no}">${depart.depart_name}</option>

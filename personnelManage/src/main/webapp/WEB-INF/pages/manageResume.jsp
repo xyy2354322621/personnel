@@ -36,8 +36,8 @@
                 <td>${resume.phone}</td><td>${resume.email}</td>
                 <td>${resume.education}</td>
                 <td><a href="checkResume?resume_no=${resume.resume_no}">点击查看</a></td>
-                <td><a href="alterResume?resume_no=${sessionScope.resume.resume_no}">修改简历</a></td>
-                <td><a href="deleteResume?resume_no=${sessionScope.resume.resume_no}">删除简历</a></td>
+                <td><a href="alterResume?resume_no=${resume.resume_no}">修改简历</a></td>
+                <td><a href="deleteResume?resume_no=${resume.resume_no}">删除简历</a></td>
             </tr>
         </c:forEach>
     </table>

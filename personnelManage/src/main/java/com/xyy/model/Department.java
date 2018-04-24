@@ -61,4 +61,16 @@ public class Department {
     public void setPositionSet(Set<Position> positionSet) {
         this.positionSet = positionSet;
     }
+
+    @Override
+    public String toString() {
+        return "Department{" +
+                "depart_no=" + depart_no +
+                ", depart_name='" + depart_name + '\'' +
+                ", depart_location='" + depart_location + '\'' +
+                ", exist=" + exist +
+                ", create_time='" + create_time + '\'' +
+                ", positionSet=" + positionSet +
+                '}';
+    }
 }

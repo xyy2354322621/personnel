@@ -45,9 +45,14 @@ public class ResumeController {
         }else {
             List<Resume> myResumes = resumeService.getMyResume(tourist);
             session.setAttribute("myResumes",myResumes);
-            response.sendRedirect("manageResume");
+            response.sendRedirect("gotoManageResume");
         }
 
+    }
+
+    @RequestMapping("/gotoManageResume")
+    public String gotoManageResume()throws Exception{
+        return "manageResume";
     }
 
     @RequestMapping("/saveResume")
@@ -56,6 +61,7 @@ public class ResumeController {
         Tourist tourist = (Tourist) session.getAttribute("tourist");
         resume.setTourist_no(tourist.getTourist_no());
         resume.setExist(1);
+        resume.setBirthday(resume.getBirthday().substring(0,10));
         if(resumeService.addResume(resume)){
             response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('简历创建成功'));" +
                     "window.location.href='manageResume';</script>");
@@ -117,6 +123,7 @@ public class ResumeController {
 
     @RequestMapping("/confirmDeleteResume")
     public void confirmDeleteResume(Resume resume,HttpServletResponse response)throws Exception{
+        response.setContentType("text/html;charset=utf-8");
         if(resumeService.deleteResume(resume)){
             response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('简历删除成功'));" +
                     "window.location.href='manageResume';</script>");

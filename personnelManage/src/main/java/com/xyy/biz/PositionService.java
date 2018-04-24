@@ -23,4 +23,6 @@ public interface PositionService {
     boolean updateRecoverPosition(Position position);
 
     boolean deletePosition(Position position);
+
+    List<Position> getPositionEmployee();
 }

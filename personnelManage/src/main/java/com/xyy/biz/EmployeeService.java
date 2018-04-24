@@ -11,4 +11,12 @@ public interface EmployeeService {
     Employee getEmployee(Employee employee);
 
     List<Employee> getEmployees();
+
+    boolean addEmployee(Employee employee);
+
+    boolean updateChangeGrade(Employee employee);
+
+    boolean updateChangePosition(Employee changePositionEmployee);
+
+    boolean updateDimission(Employee employee);
 }

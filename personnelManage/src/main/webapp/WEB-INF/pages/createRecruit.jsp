@@ -20,11 +20,6 @@
 <fieldset>
     <legend>发布招聘</legend>
     <form action="saveRecruit" method="post">
-       <%-- 部门选择：<select name="department.depart_no" style="width: 150px">
-        <c:forEach items="${sessionScope.departments}" var="department">
-            <option value="${department.depart_no}" >${department.depart_name}</option>
-        </c:forEach>
-    </select><br>--%>
         招聘职位：<input name="position" type="text" ><br>
         职位类别：<input name="position_type" type="text" ><br>
         招聘人数：<input name="number" type="text" placeholder="输入整数" pattern="^[1-9]\d{0,4}$"><br>

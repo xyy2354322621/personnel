@@ -109,11 +109,65 @@ public class DepartmentController {
     @RequestMapping("/hireApply")
     public String hireApply(Apply apply, HttpSession session)throws Exception{
         applyService.updateSetHireApply(apply);
+        apply = applyService.getApply(apply);
         session.setAttribute("hireApply",apply);
-        List<Department> departments = departmentService.getDepartmentsAndPosition();
-        session.setAttribute("departmentPosition",departments);
+        List<Department> departmentPosition = departmentService.getDepartmentsAndPosition();
+        session.setAttribute("departmentPosition",departmentPosition);
         return "assignPosition";
     }
 
+    @RequestMapping("/dissolveDepartment")
+    public void  dissolveDepartment(Department department, HttpServletResponse response)throws Exception{
+        response.setContentType("text/html;charset=utf-8");
+        Department havingEmpDepart = departmentService.havingEmpDepart(department);
+        if (havingEmpDepart==null){
+            if (departmentService.updateDissolveDepartment(department)){
+                response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('部门解散成功'));" +
+                        "window.location.href='manageDepartment';</script>");
+            }else {
+                response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('部门解散失败'));" +
+                        "window.location.href='manageDepartment';</script>");
+            }
+        }else {
+            response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('该部门下尚有员工，请先给员工转部门'));" +
+                    "window.location.href='manageDepartment';</script>");
+        }
+    }
 
+    @RequestMapping("/recoverDepartment")
+    public void  recoverDepartment(Department department, HttpServletResponse response)throws Exception{
+        response.setContentType("text/html;charset=utf-8");
+        if (departmentService.updateRecoverDepartment(department)){
+            response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('部门恢复成功'));" +
+                    "window.location.href='manageDepartment';</script>");
+        }else {
+            response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('部门恢复失败'));" +
+                    "window.location.href='manageDepartment';</script>");
+        }
+    }
+
+    @RequestMapping("/deleteDepartment")
+    public void  deleteDepartment(Department department, HttpServletResponse response)throws Exception{
+        response.setContentType("text/html;charset=utf-8");
+        Department havingEmpDepart = departmentService.havingEmpDepart(department);
+        if (havingEmpDepart==null){
+            response.getWriter().write("<script language='javascript'>if( confirm(decodeURIComponent('确定要删除吗？'))){" +
+                    "window.location.href ='confirmDeleteDepartment?depart_no="+department.getDepart_no()+"';}else {window.location.href ='manageDepartment';} </script>");
+        }else {
+            response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('该部门下尚有员工，请先给员工转部门'));" +
+                    "window.location.href='manageDepartment';</script>");
+        }
+    }
+
+    @RequestMapping("/confirmDeleteDepartment")
+    public void  confirmDeleteDepartment(Department department, HttpServletResponse response)throws Exception{
+        response.setContentType("text/html;charset=utf-8");
+        if (departmentService.deleteDepartment(department)){
+            response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('部门删除成功'));" +
+                    "window.location.href='manageDepartment';</script>");
+        }else {
+            response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('部门删除失败'));" +
+                    "window.location.href='manageDepartment';</script>");
+        }
+    }
 }

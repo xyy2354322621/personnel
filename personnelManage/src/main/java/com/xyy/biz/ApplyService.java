@@ -1,6 +1,7 @@
 package com.xyy.biz;
 
 import com.xyy.model.Apply;
+import com.xyy.model.Employee;
 import com.xyy.model.Recruit;
 import com.xyy.model.Tourist;
 
@@ -39,4 +40,8 @@ public interface ApplyService {
     boolean updateRefuseInvite(Apply apply);
 
     void updateSetHireApply(Apply apply);
+
+    Apply getApply(Apply apply);
+
+    Employee getExistEmployee(Tourist tourist);
 }

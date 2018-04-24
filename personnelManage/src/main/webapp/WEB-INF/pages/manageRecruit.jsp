@@ -43,7 +43,7 @@
                         暂停发布中
                     </c:if>
                 </td>
-                <td><a href="browseApplyResume?recruit_no=${recruit.recruit_no}">面试申请</a></td>
+                <td><a href="browseApplyResume?recruit_no=${recruit.recruit_no}">查看申请</a></td>
                 <td>
                     <c:if test="${recruit.issue==1}">
                         <a href="pauseIssueRecruit?recruit_no=${recruit.recruit_no}">暂停发布</a>

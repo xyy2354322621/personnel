@@ -25,4 +25,24 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<Employee> getEmployees() {
         return employeeMapper.getEmployees();
     }
+
+    @Override
+    public boolean addEmployee(Employee employee) {
+        return employeeMapper.addEmployee( employee) ;
+    }
+
+    @Override
+    public boolean updateChangeGrade(Employee employee) {
+        return employeeMapper.updateChangeGrade( employee);
+    }
+
+    @Override
+    public boolean updateChangePosition(Employee changePositionEmployee) {
+        return employeeMapper.updateChangePosition(changePositionEmployee);
+    }
+
+    @Override
+    public boolean updateDimission(Employee employee) {
+        return employeeMapper.updateDimission( employee);
+    }
 }

@@ -41,4 +41,24 @@ public class DepartmentServiceImpl implements DepartmentService {
     public List<Department> getDepartmentsAndPosition() {
         return departmentMapper.getDepartmentsAndPosition() ;
     }
+
+    @Override
+    public Department havingEmpDepart(Department department) {
+        return departmentMapper.havingEmpDepart(department);
+    }
+
+    @Override
+    public boolean deleteDepartment(Department department) {
+        return departmentMapper.deleteDepartment(department);
+    }
+
+    @Override
+    public boolean updateDissolveDepartment(Department department) {
+        return departmentMapper.updateDissolveDepartment(department);
+    }
+
+    @Override
+    public boolean updateRecoverDepartment(Department department) {
+        return departmentMapper.updateRecoverDepartment( department);
+    }
 }

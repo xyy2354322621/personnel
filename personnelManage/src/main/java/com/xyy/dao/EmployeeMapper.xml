@@ -1,10 +1,36 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xyy.dao.EmployeeMapper">
+    <insert id="addEmployee">
+        INSERT INTO T_EMPLOYEE("e_id", "e_name", "birthday", "gender", "phone", "email",
+        "pos_no", "entry_time", "id_no", "education", "state")
+        VALUES (#{phone},#{e_name},to_date(#{entry_time},'yyyy-mm-dd hh24:mi:ss'),#{gender},#{phone},#{email},#{pos_no},
+        to_date(#{entry_time},'yyyy-mm-dd hh24:mi:ss'),#{id_no},#{education},#{state})
+    </insert>
+    <update id="updateChangeGrade">
+        UPDATE T_EMPLOYEE SET
+         <if test="grade==1">
+             "grade"=0
+         </if>
+        <if test="grade==0">
+            "grade"=1
+        </if>
+        WHERE "e_id"=#{e_id}
+    </update>
+    <update id="updateChangePosition">
+        UPDATE T_EMPLOYEE SET "pos_no"=#{pos_no} where "e_id"=#{e_id}
+    </update>
+    <update id="updateDimission">
+        UPDATE T_EMPLOYEE SET "state"='离职',"dimission_reason"=#{dimission_reason},
+        "dimission_time"=to_date(#{dimission_time},'yyyy-mm-dd hh24:mi:ss')
+        where "e_id"=#{e_id}
+
+    </update>
     <select id="getEmployee" resultType="com.xyy.model.Employee">
         SELECT * FROM T_EMPLOYEE WHERE "e_id"=#{e_id} and "dimission_time" is null
     </select>
     <select id="getEmployees" resultType="com.xyy.model.Employee">
-        SELECT * FROM T_EMPLOYEE WHERE "dimission_time" IS NULL
+        SELECT E.*,D."depart_name",P."pos_name" FROM T_EMPLOYEE E ,T_DEPARTMENT D ,T_POSITION P
+        WHERE D."depart_no"=P."depart_no" AND P."pos_no"=E."pos_no"
     </select>
 </mapper>

@@ -18,4 +18,11 @@ public interface DepartmentMapper {
 
     List<Department> getDepartmentsAndPosition();
 
+    Department havingEmpDepart(Department department);
+
+    boolean deleteDepartment(Department department);
+
+    boolean updateDissolveDepartment(Department department);
+
+    boolean updateRecoverDepartment(Department department);
 }

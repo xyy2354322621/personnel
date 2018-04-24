@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xyy.dao.PositionMapper">
     <insert id="addPosition">
-        INSERT INTO T_POSITION VALUES (POSITION_SEQ.nextval,#{pos_name},#{depart_no},#{basic_salary},#{exist})
+        INSERT INTO T_POSITION VALUES (POSITION_SEQ.nextval,#{position},#{depart_no},#{basic_salary},#{exist})
     </insert>
     <update id="updatePosition">
-        UPDATE T_POSITION SET "pos_name"=#{pos_name},"basic_salary"=#{basic_salary} where "pos_no"=#{pos_no}
+        UPDATE T_POSITION SET "position"=#{position},"basic_salary"=#{basic_salary} where "pos_no"=#{pos_no}
     </update>
     <update id="updateDiscardPosition">
         UPDATE T_POSITION SET "exist"=0 WHERE "pos_no"=#{pos_no}
@@ -25,4 +25,28 @@
     <select id="getUsingPosition" resultType="com.xyy.model.Position">
         SELECT P.* FROM T_POSITION P ,T_EMPLOYEE E WHERE E."pos_no"=P."pos_no" AND P."pos_no"=#{pos_no}
     </select>
+    <select id="getPositionEmployee" resultMap="positionEmployee">
+        SELECT * FROM T_POSITION P ,T_EMPLOYEE E WHERE P."pos_no"=E."pos_no" 
+    </select>
+    <resultMap id="positionEmployee" type="Position">
+        <id property="pos_no" column="pos_no"/>
+        <result property="position" column="position"/>
+        <result property="basic_salary" column="basic_salary"/>
+        <association property="employeeSet" javaType="Employee">
+            <id property="e_id" column="e_id"/>
+            <result property="e_name" column="e_name"/>
+            <result property="birthday" column="birthday"/>
+            <result property="gender" column="gender"/>
+            <result property="phone" column="phone"/>
+            <result property="email" column="email"/>
+            <result property="pos_no" column="pos_no"/>
+            <result property="grade" column="grade"/>
+            <result property="entry_time" column="entry_time"/>
+            <result property="dimission_time" column="dimission_time"/>
+            <result property="id_no" column="id_no"/>
+            <result property="education" column="education"/>
+            <result property="dimission_reason" column="dimission_reason"/>
+            <result property="state" column="state"/>
+        </association>
+    </resultMap>
 </mapper>

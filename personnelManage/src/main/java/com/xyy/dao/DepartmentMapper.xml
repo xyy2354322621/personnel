@@ -8,6 +8,15 @@
         UPDATE T_DEPARTMENT SET "depart_name"=#{depart_name},"depart_location"=#{depart_location}
         where "depart_no"=#{depart_no}
     </update>
+    <update id="updateDissolveDepartment">
+        UPDATE DEPARTPOS SET "de_ex"=0,"po_ex"=0 WHERE "de_no"=#{depart_no}
+    </update>
+    <update id="updateRecoverDepartment">
+        UPDATE DEPARTPOS SET "de_ex"=1,"po_ex"=1 WHERE "de_no"=#{depart_no}
+    </update>
+    <delete id="deleteDepartment">
+        DELETE FROM T_DEPARTMENT WHERE depart_no=#{depart_no}
+    </delete>
     <select id="getDepartment" resultType="com.xyy.model.Department">
         SELECT * FROM T_DEPARTMENT WHERE "depart_name"=#{depart_name}
     </select>

@@ -2,10 +2,7 @@ package com.xyy.controller;
 
 import com.xyy.biz.ApplyService;
 import com.xyy.biz.ResumeService;
-import com.xyy.model.Apply;
-import com.xyy.model.Recruit;
-import com.xyy.model.Resume;
-import com.xyy.model.Tourist;
+import com.xyy.model.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -36,8 +33,15 @@ public class ApplyController {
             response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('您尚未登录，请先登录后发送'));" +
                     "window.location.href='recruit';</script>");
         }else {
-            session.setAttribute("apply",apply);
-            response.sendRedirect("chooseResume");
+            Employee employee = applyService.getExistEmployee(tourist);
+            if(employee==null){
+                session.setAttribute("apply",apply);
+                response.sendRedirect("chooseResume");
+            }else {
+                response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('您已是本公司员工，不可申请新职位'));" +
+                        "window.location.href='recruit';</script>");
+            }
+
         }
     }
 
@@ -175,13 +179,19 @@ public class ApplyController {
         }else {
            List<Apply> myApplies = applyService.getMyApplies(tourist);
            session.setAttribute("myApplies",myApplies);
-           response.sendRedirect("myApplies");
+           response.sendRedirect("gotoMyApplies");
         }
+    }
+
+    @RequestMapping("/gotoMyApplies")
+    public String gotoMyApplies()throws Exception{
+        return "myApplies";
     }
 
     @RequestMapping("/checkApplyResume")
     public String checkApplyResume(Apply apply, HttpSession session)throws Exception{
         applyService.updateSetRead(apply);
+        apply = applyService.getApply(apply);
         Resume resume = new Resume();
         resume.setResume_no(apply.getResume_no());
         Resume applyResume = resumeService.getResume(resume);

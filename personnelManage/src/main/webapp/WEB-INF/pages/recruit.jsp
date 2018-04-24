@@ -35,7 +35,7 @@
         <tr>
             <th>招聘职位</th><th>职位类别</th><th>招聘人数</th>
             <th>职位薪资</th><th>发布时间</th><th>要求描述</th>
-            <th>投递简历</th>
+            <th>申请职位</th>
         </tr>
         <c:forEach items="${sessionScope.issuingRecruit}" var="recruit">
             <tr>

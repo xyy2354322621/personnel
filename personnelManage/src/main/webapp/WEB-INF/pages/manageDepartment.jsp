@@ -29,7 +29,7 @@
         </tr>
         <c:forEach items="${sessionScope.departments}" var="department">
             <tr>
-                <td>${department.depart_no}</td><td>${department.depart_name}</td>
+                <td>${department.depart_no}</td><td>${department.department}</td>
                 <td>${department.depart_location}</td><td>${department.create_time}</td>
                 <td>
                     <c:if test="${department.exist==1}">
@@ -39,17 +39,17 @@
                         已解散
                     </c:if>
                 </td>
-                <td><a href="alterDepartment?pos_no=${department.depart_no}">修改</a></td>
+                <td><a href="alterDepartment?depart_no=${department.depart_no}">修改</a></td>
                 <td>
                     <c:if test="${department.exist==1}">
-                        <a href="dissolveDepartment?pos_no=${department.depart_no}">解散</a>
+                        <a href="dissolveDepartment?depart_no=${department.depart_no}">解散</a>
                     </c:if>
                     <c:if test="${department.exist==0}">
-                        <a href="recoverDepartment?pos_no=${department.depart_no}">恢复</a>
+                        <a href="recoverDepartment?depart_no=${department.depart_no}">恢复</a>
                     </c:if>
 
                 </td>
-                <td><a href="deleteDepartment?pos_no=${department.depart_no}">删除</a></td>
+                <td><a href="deleteDepartment?depart_no=${department.depart_no}">删除</a></td>
             </tr>
         </c:forEach>
     </table>

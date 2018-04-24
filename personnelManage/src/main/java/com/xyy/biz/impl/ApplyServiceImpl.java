@@ -3,6 +3,7 @@ package com.xyy.biz.impl;
 import com.xyy.biz.ApplyService;
 import com.xyy.dao.ApplyMapper;
 import com.xyy.model.Apply;
+import com.xyy.model.Employee;
 import com.xyy.model.Recruit;
 import com.xyy.model.Tourist;
 import org.springframework.stereotype.Service;
@@ -92,5 +93,15 @@ public class ApplyServiceImpl implements ApplyService {
     @Override
     public void updateSetHireApply(Apply apply) {
         applyMapper.updateSetHireApply( apply);
+    }
+
+    @Override
+    public Apply getApply(Apply apply) {
+        return applyMapper.getApply( apply);
+    }
+
+    @Override
+    public Employee getExistEmployee(Tourist tourist) {
+        return applyMapper.getExistEmployee(tourist);
     }
 }

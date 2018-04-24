@@ -56,4 +56,9 @@ public class PositionServiceImpl implements PositionService {
     public boolean deletePosition(Position position) {
         return positionMapper.deletePosition( position) ;
     }
+
+    @Override
+    public List<Position> getPositionEmployee() {
+        return positionMapper.getPositionEmployee();
+    }
 }

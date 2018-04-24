@@ -49,4 +49,10 @@
     <select id="getMyApplies" resultType="com.xyy.model.Apply">
         SELECT A.* FROM T_APPLY A ,T_RESUME R WHERE R."resume_no"=A."resume_no" AND R."tourist_no"=#{tourist_no}
     </select>
+    <select id="getApply" resultType="com.xyy.model.Apply">
+        SELECT * FROM T_APPLY WHERE "apply_no"=#{apply_no}
+    </select>
+    <select id="getExistEmployee" resultType="com.xyy.model.Employee">
+        SELECT * FROM T_EMPLOYEE WHERE "e_id"=#{tourist_no}
+    </select>
 </mapper>
