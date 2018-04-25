@@ -33,7 +33,7 @@ public class DepartmentController {
 
     @RequestMapping("/manageDepartment")
     public String manageDepartment(HttpSession session)throws Exception{
-        List<Department> departments = departmentService.getDepartments();
+        List<Department> departments = departmentService.getManageDepartments();
         session.setAttribute("departments",departments);
         return "manageDepartment";
     }
@@ -106,15 +106,7 @@ public class DepartmentController {
         return "alterDepartment";
     }
 
-    @RequestMapping("/hireApply")
-    public String hireApply(Apply apply, HttpSession session)throws Exception{
-        applyService.updateSetHireApply(apply);
-        apply = applyService.getApply(apply);
-        session.setAttribute("hireApply",apply);
-        List<Department> departmentPosition = departmentService.getDepartmentsAndPosition();
-        session.setAttribute("departmentPosition",departmentPosition);
-        return "assignPosition";
-    }
+
 
     @RequestMapping("/dissolveDepartment")
     public void  dissolveDepartment(Department department, HttpServletResponse response)throws Exception{

@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xyy.dao.RecruitMapper">
     <insert id="addRecruit">
-        INSERT INTO T_RECRUIT("recruit_no", "position", "description", "position_type", "issue", "recruit_number","salary", "issue_time")
-        VALUES (RESUME_SEQ.nextval,#{position},#{description},
-        #{position_type},#{issue},#{recruit_number},#{salary}, to_date(#{issue_time},'yyyy-mm-dd hh24:mi:ss'))
+        INSERT INTO T_RECRUIT("recruit_no", "pos_no", "description", "position_type", "issue", "recruit_number","salary", "issue_time")
+        VALUES (RESUME_SEQ.nextval,#{pos_no},#{description},#{position_type},#{issue},
+        #{recruit_number},#{salary}, to_date(#{issue_time},'yyyy-mm-dd hh24:mi:ss'))
     </insert>
     <update id="updatePauseIssueRecruit">
         UPDATE T_RECRUIT SET "issue"=0 WHERE "recruit_no"=#{recruit_no}
@@ -13,7 +13,7 @@
         UPDATE T_RECRUIT SET "issue"=1,"issue_time"=to_date(#{issue_time},'yyyy-mm-dd hh24:mi:ss') WHERE "recruit_no"=#{recruit_no}
     </update>
     <update id="updateRecruit">
-        UPDATE T_RECRUIT SET "position"=#{position},"description"=#{description},
+        UPDATE T_RECRUIT SET "pos_no"=#{pos_no},"description"=#{description},
         "position_type"=#{position_type},"recruit_number"=#{recruit_number},
         "salary"=#{salary} where "recruit_no"=#{recruit_no}
     </update>
@@ -21,9 +21,15 @@
         DELETE FROM T_RECRUIT WHERE "recruit_no"=#{recruit_no}
     </delete>
     <select id="getIssuingRecruits" resultType="com.xyy.model.Recruit">
-        SELECT * from T_RECRUIT WHERE "issue"=1
+        SELECT R.*,D."depart_name",P."pos_name" from T_RECRUIT R ,T_DEPARTMENT D ,T_POSITION P
+        WHERE D."depart_no"=P."depart_no" AND P."pos_no"=R."pos_no" AND "issue"=1
     </select>
     <select id="getRecruits" resultType="com.xyy.model.Recruit">
-        SELECT * from T_RECRUIT ORDER BY "issue" DESC
+        SELECT R.*,D."depart_name",P."pos_name" from T_RECRUIT R ,T_DEPARTMENT D ,T_POSITION P
+        WHERE D."depart_no"=P."depart_no" AND P."pos_no"=R."pos_no"
+        ORDER BY "issue" DESC,"issue_time" ASC
+    </select>
+    <select id="getRecruit" resultType="com.xyy.model.Recruit">
+        SELECT * FROM T_RECRUIT WHERE "recruit_no"=#{recruit_no}
     </select>
 </mapper>

@@ -26,4 +26,7 @@ public interface DepartmentService {
     boolean updateDissolveDepartment(Department department);
 
     boolean updateRecoverDepartment(Department department);
+
+    List<Department> getManageDepartments();
+
 }

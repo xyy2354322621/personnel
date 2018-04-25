@@ -20,17 +20,26 @@
         SELECT * FROM T_POSITION WHERE "depart_no"=#{depart_no} and "pos_name"=#{pos_name}
     </select>
     <select id="getPositions" resultType="com.xyy.model.Position">
-        SELECT P.*,D."depart_name" FROM T_POSITION P ,T_DEPARTMENT D WHERE P."depart_no"=D."depart_no" AND P."exist"=1
+        SELECT P.*,D."depart_name" FROM T_POSITION P ,T_DEPARTMENT D WHERE P."depart_no"=D."depart_no"
+        ORDER BY P."depart_no"
     </select>
     <select id="getUsingPosition" resultType="com.xyy.model.Position">
-        SELECT P.* FROM T_POSITION P ,T_EMPLOYEE E WHERE E."pos_no"=P."pos_no" AND P."pos_no"=#{pos_no}
+        SELECT P.* FROM T_POSITION P ,T_EMPLOYEE E WHERE E."pos_no"=P."pos_no" AND E."dimission_time" is NULL AND P."pos_no"=#{pos_no}
     </select>
     <select id="getPositionEmployee" resultMap="positionEmployee">
         SELECT * FROM T_POSITION P ,T_EMPLOYEE E WHERE P."pos_no"=E."pos_no" 
     </select>
+    <select id="getDepartPositions" resultType="com.xyy.model.Position">
+        SELECT P.*,D."depart_name" FROM T_DEPARTMENT D ,T_POSITION P
+        WHERE D."depart_no"=P."depart_no" AND P."exist"=1 AND P."depart_no"=#{depart_no}
+    </select>
+    <select id="getRecoverPosition" resultType="com.xyy.model.Position">
+        SELECT P.* FROM T_DEPARTMENT D ,T_POSITION P WHERE D."depart_no"=P."depart_no"
+        AND D."exist"=1 AND P."pos_no"=#{pos_no}
+    </select>
     <resultMap id="positionEmployee" type="Position">
         <id property="pos_no" column="pos_no"/>
-        <result property="position" column="position"/>
+        <result property="pos_name" column="pos_name"/>
         <result property="basic_salary" column="basic_salary"/>
         <association property="employeeSet" javaType="Employee">
             <id property="e_id" column="e_id"/>

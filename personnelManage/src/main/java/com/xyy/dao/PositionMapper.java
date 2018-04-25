@@ -1,5 +1,6 @@
 package com.xyy.dao;
 
+import com.xyy.model.Department;
 import com.xyy.model.Position;
 
 import java.util.List;
@@ -26,4 +27,7 @@ public interface PositionMapper {
 
     List<Position> getPositionEmployee();
 
+    List<Position> getDepartPositions(Department department);
+
+    Position getRecoverPosition(Position position);
 }

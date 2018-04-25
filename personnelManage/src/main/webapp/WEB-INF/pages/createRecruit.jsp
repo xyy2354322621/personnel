@@ -15,12 +15,37 @@
 <head>
     <base href="<%=basePath%>"/>
     <title></title>
+    <script>
+        function departSelect(data) {
+            <c:forEach items="${sessionScope.departmentPosition}" var="department">
+            if(data.value==${department.depart_no}){
+                var posSelect = document.getElementById("posSelect");
+                posSelect.options.length=0;
+                <c:forEach items="${department.positionSet}" var="position">
+                var posOpt = document.createElement("option");
+                posOpt.value=${position.pos_no};
+                posOpt.innerHTML="${position.pos_name}";
+                posSelect.appendChild(posOpt);
+                </c:forEach>
+            }
+            </c:forEach>
+        }
+    </script>
 </head>
 <body>
 <fieldset>
     <legend>发布招聘</legend>
-    <form action="saveRecruit" method="post">
-        招聘职位：<input name="position" type="text" ><br>
+        <form action="saveRecruit" method="post">
+            部门：<select id="dpt" onchange="departSelect(this)">
+            <c:forEach items="${sessionScope.departmentPosition}" var="depart">
+                <option value="${depart.depart_no}">${depart.depart_name}</option>
+            </c:forEach>
+        </select>
+            职位：<select id="posSelect" name="pos_no">
+            <c:forEach items="${sessionScope.departmentPosition[0].positionSet}" var="pos">
+                <option value="${pos.pos_no}">${pos.pos_name}</option>
+            </c:forEach>
+        </select><br>
         职位类别：<input name="position_type" type="text" ><br>
         招聘人数：<input name="number" type="text" placeholder="输入整数" pattern="^[1-9]\d{0,4}$"><br>
         职位薪资：<select name="salary" style="width: 150px" >

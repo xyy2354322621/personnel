@@ -49,8 +49,8 @@ public class RecruitController {
 
     @RequestMapping("/createRecruit")
     public String createRecruit(HttpSession session) throws Exception {
-        /*List<Department> departments = departmentService.getDepartments();
-        session.setAttribute("departments",departments);*/
+        List<Department> departmentPosition = departmentService.getDepartmentsAndPosition();
+        session.setAttribute("departmentPosition",departmentPosition);
         return "createRecruit";
     }
 
@@ -63,7 +63,7 @@ public class RecruitController {
         } else {
             int recruit_number = Integer.parseInt(number);
             recruit.setRecruit_number(recruit_number);
-            recruit.setIssue(1);
+            recruit.setIssue(0);
             SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
             recruit.setIssue_time(format.format(new Date()));
             if (recruitService.addRecruit(recruit)) {
@@ -148,6 +148,7 @@ public class RecruitController {
         int recruit_number = Integer.parseInt(number);
         recruit.setRecruit_number(recruit_number);
         recruit.setRecruit_no(alterRecruit.getRecruit_no());
+        recruit.setPos_no(alterRecruit.getPos_no());
         if (recruitService.updateRecruit(recruit)) {
             response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('招聘信息修改成功'));" +
                     "window.location.href='manageRecruit';</script>");

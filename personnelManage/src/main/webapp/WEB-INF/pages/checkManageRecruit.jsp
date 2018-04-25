@@ -20,7 +20,7 @@
 <div>
     <table>
         <tr>
-            <td>招聘职位</td><td>${sessionScope.checkManageRecruit.position}</td>
+            <td>招聘职位</td><td>${sessionScope.checkManageRecruit.pos_name}</td>
             <td>职位类别</td><td>${sessionScope.checkManageRecruit.position_type}</td>
         </tr>
         <tr>

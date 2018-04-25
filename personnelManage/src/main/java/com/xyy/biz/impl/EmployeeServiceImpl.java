@@ -2,7 +2,9 @@ package com.xyy.biz.impl;
 
 import com.xyy.biz.EmployeeService;
 import com.xyy.dao.EmployeeMapper;
+import com.xyy.model.Department;
 import com.xyy.model.Employee;
+import com.xyy.model.Position;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -44,5 +46,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public boolean updateDimission(Employee employee) {
         return employeeMapper.updateDimission( employee);
+    }
+
+    @Override
+    public List<Employee> getPositionEmployees(Position position) {
+        return employeeMapper.getPositionEmployees(position);
+    }
+
+    @Override
+    public List<Employee> getDepartEmployees(Department department) {
+        return employeeMapper.getDepartEmployees( department);
     }
 }

@@ -2,6 +2,7 @@ package com.xyy.biz.impl;
 
 import com.xyy.biz.PositionService;
 import com.xyy.dao.PositionMapper;
+import com.xyy.model.Department;
 import com.xyy.model.Position;
 import org.springframework.stereotype.Service;
 
@@ -60,5 +61,15 @@ public class PositionServiceImpl implements PositionService {
     @Override
     public List<Position> getPositionEmployee() {
         return positionMapper.getPositionEmployee();
+    }
+
+    @Override
+    public List<Position> getDepartPositions(Department department) {
+        return positionMapper.getDepartPositions(department) ;
+    }
+
+    @Override
+    public Position getRecoverPosition(Position position) {
+        return positionMapper.getRecoverPosition( position) ;
     }
 }

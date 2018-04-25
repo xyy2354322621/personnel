@@ -12,10 +12,15 @@
         UPDATE T_APPLY SET "invite"='未邀请',"interview_info"=NULL WHERE "apply_no"=#{apply_no}
     </update>
     <update id="updateRefuseApply">
-        UPDATE T_APPLY SET "invite"='拒绝申请',"interview_info"=NULL WHERE "apply_no"=#{apply_no}
+        UPDATE T_APPLY SET "invite"='未邀请',"interview"='不予面试',"interview_info"=NULL WHERE "apply_no"=#{apply_no}
     </update>
     <update id="updateDeleteApply">
-        UPDATE T_APPLY SET "exist"=0,"invite"='拒绝申请',"interview_info"=NULL WHERE "apply_no"=#{apply_no}
+        <if test="#{exist}==1">
+            UPDATE T_APPLY SET "exist"=0,"invite"='未邀请',"interview"='不予面试',"interview_info"=NULL WHERE "apply_no"=#{apply_no}
+        </if>
+        <if test="#{exist}==0">
+            DELETE FROM  T_APPLY WHERE "apply_no"=#{apply_no}
+        </if>
     </update>
     <update id="updateSuccessInterview">
         UPDATE T_APPLY SET "interview"='面试成功' WHERE "apply_no"=#{apply_no}
@@ -27,10 +32,10 @@
         UPDATE T_APPLY SET "isread"='已阅读' WHERE "apply_no"=#{apply_no}
     </update>
     <update id="updateAgreeInvite">
-        UPDATE T_APPLY SET "invite"='同意邀请' WHERE "apply_no"=#{apply_no}
+        UPDATE T_APPLY SET "interview"='同意面试' WHERE "apply_no"=#{apply_no}
     </update>
     <update id="updateRefuseInvite">
-        UPDATE T_APPLY SET "invite"='拒绝邀请' WHERE "apply_no"=#{apply_no}
+        UPDATE T_APPLY SET "interview"='拒绝面试' WHERE "apply_no"=#{apply_no}
     </update>
     <update id="updateSetHireApply">
         UPDATE T_APPLY SET "hire"='录用' WHERE "apply_no"=#{apply_no}

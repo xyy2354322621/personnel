@@ -5,9 +5,10 @@ package com.xyy.model;
  */
 public class Recruit {
     private long recruit_no;
-    private String position;
+    private long pos_no;
+    private String pos_name;
     private String description;
-//    private Department department;
+    private Department depart_name;
     private String position_type;
     private int issue;
     private int recruit_number;
@@ -22,13 +23,15 @@ public class Recruit {
         this.recruit_no = recruit_no;
     }
 
-    public String getPosition() {
-        return position;
+    public long getPos_no() {
+        return pos_no;
     }
 
-    public void setPosition(String position) {
-        this.position = position;
+    public void setPos_no(long pos_no) {
+        this.pos_no = pos_no;
     }
+
+
 
     public String getDescription() {
         return description;
@@ -38,13 +41,21 @@ public class Recruit {
         this.description = description;
     }
 
-   /* public Department getDepartment() {
-        return department;
+    public String getPos_name() {
+        return pos_name;
     }
 
-    public void setDepartment(Department department) {
-        this.department = department;
-    }*/
+    public void setPos_name(String pos_name) {
+        this.pos_name = pos_name;
+    }
+
+    public Department getDepart_name() {
+        return depart_name;
+    }
+
+    public void setDepart_name(Department depart_name) {
+        this.depart_name = depart_name;
+    }
 
     public String getPosition_type() {
         return position_type;
@@ -90,8 +101,10 @@ public class Recruit {
     public String toString() {
         return "Recruit{" +
                 "recruit_no=" + recruit_no +
-                ", position='" + position + '\'' +
+                ", pos_no=" + pos_no +
+                ", pos_name='" + pos_name + '\'' +
                 ", description='" + description + '\'' +
+                ", depart_name=" + depart_name +
                 ", position_type='" + position_type + '\'' +
                 ", issue=" + issue +
                 ", recruit_number=" + recruit_number +

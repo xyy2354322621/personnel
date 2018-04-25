@@ -134,11 +134,17 @@ public class PositionController {
     @RequestMapping("/recoverPosition")
     public void recoverPosition(Position position,HttpServletResponse response)throws Exception {
         response.setContentType("text/html;charset=utf-8");
-        if(positionService.updateRecoverPosition(position)){
-            response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('职位恢复成功'));" +
-                    "window.location.href='managePosition';</script>");
+        Position recoverPosition = positionService.getRecoverPosition(position);
+        if (recoverPosition!=null) {
+            if (positionService.updateRecoverPosition(position)) {
+                response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('职位恢复成功'));" +
+                        "window.location.href='managePosition';</script>");
+            } else {
+                response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('职位恢复失败，请重试'));" +
+                        "window.location.href='managePosition';</script>");
+            }
         }else {
-            response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('职位恢复失败，请重试'));" +
+            response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('此职位的部门已解散，不可恢复'));" +
                     "window.location.href='managePosition';</script>");
         }
     }
@@ -149,7 +155,7 @@ public class PositionController {
         Position usingPosition = positionService.getUsingPosition(position);
         if (usingPosition==null){
             response.getWriter().write("<script language='javascript'>if( confirm(decodeURIComponent('确定要删除吗？'))){" +
-                    "window.location.href ='confirmDeletePosition?=pos_no"+position.getPos_no()+"';}else {window.location.href ='managePosition';} </script>");
+                    "window.location.href ='confirmDeletePosition?pos_no="+position.getPos_no()+"';}else {window.location.href ='managePosition';} </script>");
 
         }else {
             response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('该职位下尚有员工，不可删除'));" +
@@ -163,18 +169,20 @@ public class PositionController {
     @RequestMapping("/confirmDeletePosition")
     public void confirmDeletePosition(Position position,HttpServletResponse response)throws Exception {
         response.setContentType("text/html;charset=utf-8");
-        Position usingPosition = positionService.getUsingPosition(position);
-        if (usingPosition == null) {
-            if (positionService.deletePosition(position)) {
-                response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('职位删除成功'));" +
-                        "window.location.href='managePosition';</script>");
-            } else {
-                response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('职位删除失败，请重试'));" +
-                        "window.location.href='managePosition';</script>");
-            }
+        if (positionService.deletePosition(position)) {
+            response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('职位删除成功'));" +
+                    "window.location.href='managePosition';</script>");
         } else {
-            response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('该职位下尚有员工，不可删除'));" +
+            response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('职位删除失败，请重试'));" +
                     "window.location.href='managePosition';</script>");
         }
+
+    }
+
+    @RequestMapping("/departPosition")
+    public String departPosition(Department department,HttpSession session)throws Exception{
+        List<Position> departPositions = positionService.getDepartPositions(department);
+        session.setAttribute("departPositions",departPositions);
+        return "departPositions";
     }
 }

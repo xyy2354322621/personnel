@@ -33,6 +33,12 @@ public class EmployeeController {
     @Resource
     private PositionService positionService;
 
+    @Resource
+    private ApplyService applyService;
+
+    @Resource
+    private RecruitService recruitService;
+
     @RequestMapping("/gotoEmployeeLogin")
     public String gotoEmployeeLogin()throws Exception{
         return "employeeLogin";
@@ -80,20 +86,33 @@ public class EmployeeController {
         return "manageEmployee";
     }
 
+    @RequestMapping("/hireApply")
+    public String hireApply(Apply apply, HttpSession session)throws Exception{
+        applyService.updateSetHireApply(apply);
+        apply = applyService.getApply(apply);
+        session.setAttribute("hireApply",apply);
+        List<Department> departmentPosition = departmentService.getDepartmentsAndPosition();
+        session.setAttribute("departmentPosition",departmentPosition);
+        return "assignPosition";
+    }
+
     @RequestMapping("/hireEmployee")
-    public void hireEmployee(Position position,HttpSession session,HttpServletResponse response)throws Exception{
+    public void hireEmployee(Apply hireApply,HttpSession session,HttpServletResponse response)throws Exception{
         response.setContentType("text/html;charset=utf-8");
-        Apply hireApply = (Apply) session.getAttribute("hireApply");
+        applyService.updateSetHireApply(hireApply);
         Resume resume = new Resume();
         resume.setResume_no(hireApply.getResume_no());
         resume = resumeService.getResume(resume);
+        Recruit recruit = new Recruit();
+        recruit.setRecruit_no(hireApply.getRecruit_no());
+        recruit =recruitService.getRecruit(recruit);
         Employee employee = new Employee();
         employee.setE_name(resume.getTourist_name());
         employee.setBirthday(resume.getBirthday());
         employee.setGender(resume.getGender());
         employee.setPhone(resume.getPhone());
         employee.setEmail(resume.getEmail());
-        employee.setPos_no(position.getPos_no());
+        employee.setPos_no(recruit.getPos_no());
         employee.setGrade("0");
         SimpleDateFormat format = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
         employee.setEntry_time(format.format(new Date()));
@@ -156,5 +175,19 @@ public class EmployeeController {
             response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('离职操作失败，请重试'));" +
                     "window.location.href='manageEmployee';</script>");
         }
+    }
+
+    @RequestMapping("/positionEmployee")
+    public String positionEmployee(Position position,HttpSession session){
+        List<Employee> positionEmployees = employeeService.getPositionEmployees(position);
+        session.setAttribute("positionEmployees",positionEmployees);
+        return "positionEmployee";
+    }
+
+    @RequestMapping("/departEmployee")
+    public String departEmployee(Department department,HttpSession session){
+        List<Employee> departEmployees = employeeService.getDepartEmployees(department);
+        session.setAttribute("departEmployees",departEmployees);
+        return "departEmployees";
     }
 }

@@ -52,5 +52,10 @@ public class RecruitServiceImpl implements RecruitService {
         return recruitMapper.deleteRecruit( recruit);
     }
 
+    @Override
+    public Recruit getRecruit(Recruit recruit) {
+        return recruitMapper.getRecruit(recruit) ;
+    }
+
 
 }

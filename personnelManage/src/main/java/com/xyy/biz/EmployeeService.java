@@ -1,6 +1,8 @@
 package com.xyy.biz;
 
+import com.xyy.model.Department;
 import com.xyy.model.Employee;
+import com.xyy.model.Position;
 
 import java.util.List;
 
@@ -19,4 +21,8 @@ public interface EmployeeService {
     boolean updateChangePosition(Employee changePositionEmployee);
 
     boolean updateDimission(Employee employee);
+
+    List<Employee> getPositionEmployees(Position position);
+
+    List<Employee> getDepartEmployees(Department department);
 }

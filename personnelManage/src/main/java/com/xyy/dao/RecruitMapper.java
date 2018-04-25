@@ -21,4 +21,6 @@ public interface RecruitMapper {
     boolean updateRecruit(Recruit recruit);
 
     boolean deleteRecruit(Recruit recruit);
+
+    Recruit getRecruit(Recruit recruit);
 }

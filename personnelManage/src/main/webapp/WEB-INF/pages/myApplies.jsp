@@ -22,7 +22,7 @@
     <table>
         <caption>面试申请</caption>
         <tr>
-            <th>申请编号</th><th>投递时间</th><th>阅读状态</th><th>面试邀请状态</th>
+            <th>申请编号</th><th>投递时间</th><th>阅读状态</th><th>面试邀请</th>
             <th>面试状态</th><th>录用状态</th><th>面试答复</th><%--<th>删除</th>--%>
         </tr>
         <c:forEach items="${sessionScope.myApplies}" var="apply">
@@ -38,9 +38,7 @@
                     </c:if>
                 </td>
                 <%--<td>
-                    <c:if test="${apply.invite=='拒绝申请'}">
-                    <a href="refuseInvite?apply_no=${apply.apply_no}">删除</a>
-                    </c:if>
+                    <a href="deleteApply?apply_no=${apply.apply_no}">删除</a>
                 </td>--%>
             </tr>
         </c:forEach>

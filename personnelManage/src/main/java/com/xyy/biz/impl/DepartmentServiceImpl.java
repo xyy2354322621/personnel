@@ -61,4 +61,11 @@ public class DepartmentServiceImpl implements DepartmentService {
     public boolean updateRecoverDepartment(Department department) {
         return departmentMapper.updateRecoverDepartment( department);
     }
+
+    @Override
+    public List<Department> getManageDepartments() {
+        return departmentMapper.getManageDepartments() ;
+    }
+
+
 }

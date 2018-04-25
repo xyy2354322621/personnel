@@ -1,5 +1,6 @@
 package com.xyy.biz;
 
+import com.xyy.model.Department;
 import com.xyy.model.Position;
 
 import java.util.List;
@@ -25,4 +26,8 @@ public interface PositionService {
     boolean deletePosition(Position position);
 
     List<Position> getPositionEmployee();
+
+    List<Position> getDepartPositions(Department department);
+
+    Position getRecoverPosition(Position position);
 }

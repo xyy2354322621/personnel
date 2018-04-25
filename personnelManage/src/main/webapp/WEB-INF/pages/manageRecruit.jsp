@@ -24,23 +24,23 @@
     <table>
         <caption>招聘信息</caption>
         <tr>
-            <th>招聘职位</th><th>职位类别</th><th>招聘人数</th>
+            <th>招聘职位</th><th>所属部门</th><th>职位类别</th><th>招聘人数</th>
             <th>职位薪资</th><th>发布时间</th><th>要求描述</th>
             <th>发布状态</th><td>面试申请</td><th>状态变更</th>
             <th>修改</th><th>删除</th>
         </tr>
         <c:forEach items="${sessionScope.recruits}" var="recruit">
             <tr>
-                <td>${recruit.position}</td><td>${recruit.position_type}</td>
+                <td>${recruit.pos_name}</td><td>${recruit.depart_name}</td><td>${recruit.position_type}</td>
                 <td>${recruit.recruit_number}</td><td>${recruit.salary}</td>
                 <td>${recruit.issue_time}</td>
                 <td><a href="checkManageRecruit?recruit_no=${recruit.recruit_no}">点击查看</a></td>
                 <td>
                     <c:if test="${recruit.issue==1}">
-                        招聘发布中
+                        发布中
                     </c:if>
                     <c:if test="${recruit.issue==0}">
-                        暂停发布中
+                        未发布
                     </c:if>
                 </td>
                 <td><a href="browseApplyResume?recruit_no=${recruit.recruit_no}">查看申请</a></td>
@@ -49,7 +49,7 @@
                         <a href="pauseIssueRecruit?recruit_no=${recruit.recruit_no}">暂停发布</a>
                     </c:if>
                     <c:if test="${recruit.issue==0}">
-                        <a href="recoverIssueRecruit?recruit_no=${recruit.recruit_no}">重新发布</a>
+                        <a href="recoverIssueRecruit?recruit_no=${recruit.recruit_no}">发布</a>
                     </c:if>
                 </td>
                 <td><a href="alterRecruit?recruit_no=${recruit.recruit_no}">修改</a></td>

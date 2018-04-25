@@ -9,10 +9,10 @@
         where "depart_no"=#{depart_no}
     </update>
     <update id="updateDissolveDepartment">
-        UPDATE DEPARTPOS SET "de_ex"=0,"po_ex"=0 WHERE "de_no"=#{depart_no}
+        UPDATE T_DEPARTMENT SET "exist"=0 WHERE "depart_no"=#{depart_no}
     </update>
     <update id="updateRecoverDepartment">
-        UPDATE DEPARTPOS SET "de_ex"=1,"po_ex"=1 WHERE "de_no"=#{depart_no}
+        UPDATE T_DEPARTMENT SET "exist"=1 WHERE "depart_no"=#{depart_no}
     </update>
     <delete id="deleteDepartment">
         DELETE FROM T_DEPARTMENT WHERE depart_no=#{depart_no}
@@ -26,6 +26,14 @@
     <select id="getDepartmentsAndPosition" resultMap="departmentPosition">
         SELECT * FROM T_DEPARTMENT D ,T_POSITION P WHERE D."depart_no"=P."depart_no"
         AND D."exist"=1 AND P."exist"=1
+    </select>
+    <select id="havingEmpDepart" resultType="com.xyy.model.Department">
+        SELECT D.* FROM T_DEPARTMENT D ,T_POSITION P ,T_EMPLOYEE E
+        WHERE D."depart_no"=P."depart_no" AND P."pos_no"=E."pos_no" AND
+        E."dimission_time" IS NULL AND D."depart_no"=#{depart_no}
+    </select>
+    <select id="getManageDepartments" resultType="com.xyy.model.Department">
+        SELECT * FROM T_DEPARTMENT
     </select>
     <resultMap id="departmentPosition" type="Department">
         <id property="depart_no" column="depart_no"/>

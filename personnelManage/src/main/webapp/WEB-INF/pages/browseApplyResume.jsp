@@ -22,9 +22,9 @@
     <table>
         <caption>面试申请</caption>
         <tr>
-            <th>申请编号</th><th>投递时间</th><th>阅读状态</th><th>面试邀请状态</th>
+            <th>申请编号</th><th>投递时间</th><th>阅读状态</th><th>是否邀请</th>
             <th>面试状态</th><th>录用状态</th><th>查看简历</th>
-            <th>邀请面试</th><th>拒绝申请</th><th>删除申请</th>
+            <th>面试邀请</th><th>拒绝申请</th><th>删除申请</th>
             <th>面试记录</th><th>录用</th>
         </tr>
         <c:forEach items="${sessionScope.applies}" var="apply">
@@ -38,28 +38,40 @@
                         <a href="inviteInterview?apply_no=${apply.apply_no}&recruit_no=${apply.recruit_no}">邀请面试</a>
                     </c:if>
                     <c:if test="${apply.invite=='已邀请'}">
-                        <a href="cancerInvite?apply_no=${apply.apply_no}&recruit_no=${apply.recruit_no}">取消邀请</a>
+                        <c:if test="${apply.interview!='同意面试'}">
+                            <a href="cancerInvite?apply_no=${apply.apply_no}&recruit_no=${apply.recruit_no}">取消邀请</a>
+                        </c:if>
                     </c:if>
                 </td>
                 <td>
-                    <c:if test="${apply.invite!='同意邀请'}">
-                        <a href="refuseApply?apply_no=${apply.apply_no}&recruit_no=${apply.recruit_no}">拒绝申请</a>
+                    <c:if test="${apply.interview=='未面试'}">
+                        <a href="refuseApply?apply_no=${apply.apply_no}&recruit_no=${apply.recruit_no}">不予面试</a>
                     </c:if>
                 </td>
                 <td>
-                    <c:if test="${apply.invite!='同意邀请'}">
-                        <a href="deleteApply?apply_no=${apply.apply_no}&recruit_no=${apply.recruit_no}">删除申请</a>
+                    <c:if test="${apply.interview=='未面试'}">
+                        <a href="deleteApply?apply_no=${apply.apply_no}&recruit_no=${apply.recruit_no}&exist=${apply.exist}">删除申请</a>
+                    </c:if>
+                    <c:if test="${apply.interview=='面试失败'}">
+                        <a href="deleteApply?apply_no=${apply.apply_no}&recruit_no=${apply.recruit_no}&exist=${apply.exist}">删除申请</a>
+                    </c:if>
+                    <c:if test="${apply.hire=='录用'}">
+                        <a href="deleteApply?apply_no=${apply.apply_no}&recruit_no=${apply.recruit_no}&exist=${apply.exist}">删除申请</a>
                     </c:if>
                 </td>
                 <td>
-                    <c:if test="${apply.invite=='同意邀请'}">
-                        <a href="successInterview?apply_no=${apply.apply_no}&recruit_no=${apply.recruit_no}">成功</a>
-                        <a href="failInterview?apply_no=${apply.apply_no}&recruit_no=${apply.recruit_no}">失败</a>
+                    <c:if test="${apply.interview=='同意面试'}">
+                        <c:if test="${apply.hire!='录用'}">
+                            <a href="failInterview?apply_no=${apply.apply_no}&recruit_no=${apply.recruit_no}">失败</a>
+                            <a href="failInterview?apply_no=${apply.apply_no}&recruit_no=${apply.recruit_no}">失败</a>
+                        </c:if>
                     </c:if>
                 </td>
                 <td>
                     <c:if test="${apply.interview=='面试成功'}">
-                        <a href="hireApply?apply_no=${apply.apply_no}&resume_no=${apply.resume_no}">录用</a>
+                        <c:if test="${apply.hire!='录用'}">
+                            <a href="hireEmployee?apply_no=${apply.apply_no}&resume_no=${apply.resume_no}&recruit_no=${apply.recruit_no}">录用</a>
+                        </c:if>
                     </c:if>
                 </td>
 

@@ -22,6 +22,7 @@
     <a href="managePosition">职位管理</a>
     <a href="manageEmployee">员工管理</a>
     <a href="manageRecruit">招聘管理</a>
+    <a href="manageTrain">培训管理</a>
 </c:if>
 </body>
 </html>

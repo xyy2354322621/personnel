@@ -25,4 +25,6 @@ public interface DepartmentMapper {
     boolean updateDissolveDepartment(Department department);
 
     boolean updateRecoverDepartment(Department department);
+
+    List<Department> getManageDepartments();
 }

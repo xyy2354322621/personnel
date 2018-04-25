@@ -77,4 +77,10 @@ public class TouristController {
         System.out.println("直接过来");
         return "/eLogin.jsp";
     }
+
+    @RequestMapping("/gotoTest")
+    public String gotoTest()throws Exception{
+        System.out.println("过来测试");
+        return "test";
+    }
 }

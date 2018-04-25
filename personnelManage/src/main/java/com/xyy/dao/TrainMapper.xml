@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xyy.dao.TrainMapper">
+    <insert id="addTrain">
+        INSERT INTO T_TRAIN VALUES (TRAIN_SEQ.nextval,#{train_name},#{train_address},
+        #{start_time},#{end_time},#{message})
+    </insert>
+    <update id="updateTrain">
+        UPDATE T_TRAIN SET "message"=#{message},"end_time"=#{end_time},"start_time"=#{start_time},
+        "train_address"=#{train_address},"train_name"=#{train_name}
+        where "train_no"=#{train_no}
+    </update>
+    <delete id="deleteTrain">
+        DELETE FROM T_TRAIN WHERE "train_no"=#{train_no}
+    </delete>
+    <select id="getTrains" resultType="com.xyy.model.Train">
+        SELECT * FROM T_TRAIN
+    </select>
+    <select id="getTrain" resultType="com.xyy.model.Train">
+        SELECT * FROM T_TRAIN WHERE "train_no"=#{train_no}
+    </select>
+</mapper>

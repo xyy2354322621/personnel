@@ -32,7 +32,7 @@
 <fieldset>
     <legend>修改招聘信息</legend>
     <form action="updateRecruit" method="post">
-        招聘职位：<input name="position" type="text" value="${sessionScope.alterRecruit.position}"><br>
+        招聘职位：<input name="pos_name" type="text" value="${sessionScope.alterRecruit.pos_name}" disabled><br>
         职位类别：<input name="position_type" type="text" value="${sessionScope.alterRecruit.position_type}"><br>
         招聘人数：<input name="number" type="text" value="${sessionScope.alterRecruit.recruit_number}" pattern="^[1-9]\d{0,4}$"><br>
         职位薪资：<select name="salary" id="select" style="width: 150px" >

@@ -28,6 +28,8 @@
 <a href="gotoTouristRegister">游客注册</a>
 <a href="manageResume">我的简历</a>
 <a href="manageApply">我的申请</a>
+<a href="gotoTest">测试</a>
+
 
 <div>
     <table>
@@ -39,7 +41,7 @@
         </tr>
         <c:forEach items="${sessionScope.issuingRecruit}" var="recruit">
             <tr>
-                <td>${recruit.position}</td><td>${recruit.position_type}</td>
+                <td>${recruit.pos_name}</td><td>${recruit.position_type}</td>
                 <td>${recruit.recruit_number}</td><td>${recruit.salary}</td>
                 <td>${recruit.issue_time}</td>
                 <td><a href="checkRecruit?recruit_no=${recruit.recruit_no}">点击查看</a></td>
