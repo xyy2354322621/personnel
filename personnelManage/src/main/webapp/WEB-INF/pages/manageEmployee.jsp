@@ -136,6 +136,7 @@
     </script>
 </head>
 <body>
+<a href="gotoEmployeeHome">返回</a>
 部门：<select id="dpt" onchange="departSelect(this)">
     <c:forEach items="${sessionScope.departmentPosition}" var="depart">
         <option value="${depart.depart_no}">${depart.depart_name}</option>
@@ -149,7 +150,7 @@
 
 <div>
     <table id="empTable">
-        <caption>所有员工</caption>
+        <caption>员工</caption>
         <tr>
             <th>员工编号</th><th>姓名</th><th>性别</th><th>生日</th>
             <th>身份证号</th><th>手机号</th><th>电子邮箱</th><th>入职时间</th>

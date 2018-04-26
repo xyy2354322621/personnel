@@ -3,6 +3,7 @@ package com.xyy.biz.impl;
 import com.xyy.biz.TrainService;
 import com.xyy.dao.TrainMapper;
 import com.xyy.model.Train;
+import com.xyy.model.TrainRecord;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -40,4 +41,6 @@ public class TrainServiceImpl implements TrainService {
     public boolean deleteTrain(Train train) {
         return trainMapper.deleteTrain(train);
     }
+
+
 }

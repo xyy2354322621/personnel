@@ -23,6 +23,8 @@
     <a href="manageEmployee">员工管理</a>
     <a href="manageRecruit">招聘管理</a>
     <a href="manageTrain">培训管理</a>
+    <a href="manageSalary">薪资管理</a>
+    <a href="manageRewardAndPunishment">奖惩管理</a>
 </c:if>
 </body>
 </html>

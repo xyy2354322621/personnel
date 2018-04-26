@@ -2,6 +2,7 @@ package com.xyy.controller;
 
 import com.xyy.biz.TrainService;
 import com.xyy.model.Train;
+import com.xyy.model.TrainRecord;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -77,4 +78,6 @@ public class TrainController {
                     "window.location.href='manageTrain';</script>");
         }
     }
+
+
 }

@@ -43,4 +43,9 @@
         WHERE D."depart_no"=P."depart_no" AND P."pos_no"=E."pos_no" AND E."dimission_time" IS NULL AND D."depart_no"=#{depart_no}
         ORDER BY "depart_name","pos_name"
     </select>
+    <select id="getJoinTrainEmployees" resultType="com.xyy.model.Employee">
+         SELECT E.*,D."depart_name",P."pos_name" FROM T_EMPLOYEE E ,T_DEPARTMENT D ,T_POSITION P ,T_TRAIN_RECORD R
+        WHERE D."depart_no"=P."depart_no" AND P."pos_no"=E."pos_no" AND R."e_id"=E."e_id" AND R."train_no"=#{train_no}
+        ORDER BY "depart_name","pos_name"
+    </select>
 </mapper>

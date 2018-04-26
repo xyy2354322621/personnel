@@ -1,6 +1,7 @@
 package com.xyy.biz;
 
 import com.xyy.model.Train;
+import com.xyy.model.TrainRecord;
 
 import java.util.List;
 

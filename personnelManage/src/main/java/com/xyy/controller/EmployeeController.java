@@ -3,12 +3,14 @@ package com.xyy.controller;
 import com.xyy.biz.*;
 import com.xyy.model.*;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -76,13 +78,8 @@ public class EmployeeController {
     public String manageEmployee(HttpSession session)throws Exception{
         List<Department> departmentPosition = departmentService.getDepartmentsAndPosition();
         session.setAttribute("departmentPosition",departmentPosition);
-        /*List<Position>  positionEmployee = positionService.getPositionEmployee();
-        session.setAttribute("positionEmployee",positionEmployee);*/
         List<Employee> employees = employeeService.getEmployees();
         session.setAttribute("employees",employees);
-        for (Employee emp :employees) {
-            System.out.println(emp);
-        }
         return "manageEmployee";
     }
 
@@ -189,5 +186,35 @@ public class EmployeeController {
         List<Employee> departEmployees = employeeService.getDepartEmployees(department);
         session.setAttribute("departEmployees",departEmployees);
         return "departEmployees";
+    }
+
+    @RequestMapping("/chooseEmpToTrain")
+    public String chooseEmpToTrain(Train train, HttpSession session, Model model)throws Exception{
+        model.addAttribute(train);
+        List<Department> departmentPosition = departmentService.getDepartmentsAndPosition();
+        session.setAttribute("departmentPosition",departmentPosition);
+        List<Employee> employees = employeeService.getEmployees();
+        List<Employee> joinEmployees = employeeService.getJoinTrainEmployees(train);
+        List<Employee> empList = new ArrayList<>();
+        for (Employee emp :employees) {
+            for (Employee joinEmp :joinEmployees) {
+                if (emp.getE_id().equals(joinEmp.getE_id())){
+                    empList.add(emp);
+                }
+            }
+        }
+        employees.removeAll(empList);
+        session.setAttribute("TrainEmployees",employees);
+        return "chooseEmpToTrain";
+    }
+
+    @RequestMapping("/browseEmpJoinTrain")
+    public String browseEmpJoinTrain(Train train, HttpSession session, Model model)throws Exception{
+        model.addAttribute(train);
+        List<Department> departmentPosition = departmentService.getDepartmentsAndPosition();
+        session.setAttribute("departmentPosition",departmentPosition);
+        List<Employee> joinEmployees = employeeService.getJoinTrainEmployees(train);
+        session.setAttribute("joinEmployees",joinEmployees);
+        return "browseEmpJoinTrain";
     }
 }

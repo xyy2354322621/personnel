@@ -20,12 +20,14 @@
 <a href="createTrain">新开培训</a>
 <a href="gotoEmployeeHome">返回</a>
 <div>
+
     <table>
         <caption>职位信息</caption>
         <tr>
             <th>培训编号</th><th>培训名称</th><th>培训地点</th>
             <th>开始时间</th><th>结束时间</th><th>备注</th>
             <th>修改</th><th>删除</th><th>添加学员</th>
+            <th>查看学员</th>
         </tr>
         <c:forEach items="${trainList}" var="train">
             <tr>
@@ -34,10 +36,12 @@
                 <td>${train.end_time}</td><td>${train.message}</td>
                 <td><a href="alterTrain?train_no=${train.train_no}">修改</a></td>
                 <td><a href="deleteTrain?train_no=${train.train_no}">删除</a></td>
-                <td><a href="chooseEmpToTrain?train_no=${train.train_no}">添加</a></td>
+                <td><a href="chooseEmpToTrain?train_no=${train.train_no}">添加学员</a></td>
+                <td><a href="browseEmpJoinTrain?train_no=${train.train_no}">查看学员</a></td>
             </tr>
         </c:forEach>
     </table>
+
 </div>
 </body>
 </html>

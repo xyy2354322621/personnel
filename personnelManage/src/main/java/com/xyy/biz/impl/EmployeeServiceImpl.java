@@ -5,6 +5,7 @@ import com.xyy.dao.EmployeeMapper;
 import com.xyy.model.Department;
 import com.xyy.model.Employee;
 import com.xyy.model.Position;
+import com.xyy.model.Train;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -56,5 +57,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Employee> getDepartEmployees(Department department) {
         return employeeMapper.getDepartEmployees( department);
+    }
+
+    @Override
+    public List<Employee> getJoinTrainEmployees(Train train) {
+        return employeeMapper.getJoinTrainEmployees( train) ;
     }
 }

@@ -25,8 +25,9 @@
         培训地点：<input name="train_address" type="text" value="${train.train_address}"><br>
         开始时间：<input name="start_time" type="datetime-local" value="${train.start_time}"><br>
         结束时间：<input name="end_time" type="datetime-local" value="${train.end_time}"><br>
-        培训备注：<textarea name="message"  ></textarea><br>
-        <input type="submit" value="新增">
+        培训备注：（培训的内容及要求，对象等）<br>
+        <textarea name="message"  ></textarea><br>
+        <input type="submit" value="修改">
         <input type="reset" value="重置">
     </form>
 </fieldset>
