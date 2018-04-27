@@ -28,4 +28,8 @@ public interface EmployeeMapper {
     List<Employee> getDepartEmployees(Department department);
 
     List<Employee> getJoinTrainEmployees(Train train);
+
+    boolean updateChangeToNormal(Employee employee);
+
+    List<Employee> getNormalEmployees();
 }

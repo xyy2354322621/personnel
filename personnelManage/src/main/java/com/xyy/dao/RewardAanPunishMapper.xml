@@ -6,10 +6,10 @@
         #{reason},#{money},1)
     </insert>
     <update id="updateCancerRewordPunish">
-        UPDATE T_R_AND_P SET "exist"=0
+        UPDATE T_R_AND_P SET "exist"=0 WHERE "r_and_p_no"=#{r_and_p_no}
     </update>
     <update id="updateExecuteRewordPunish">
-       UPDATE T_R_AND_P SET "exist"=1
+       UPDATE T_R_AND_P SET "exist"=1 WHERE "r_and_p_no"=#{r_and_p_no}
     </update>
     <update id="updateRewardPunish">
         UPDATE T_R_AND_P SET "money"=#{money},"time"=#{time},"reason"=#{reason},"type"=#{type}
@@ -20,10 +20,14 @@
     </delete>
     <select id="getCurMonthRewardAndPunish" resultType="com.xyy.model.RewardAanPunish">
         SELECT R.*,E."e_name" FROM T_R_AND_P R,T_EMPLOYEE E WHERE E."e_id"=R."e_id" AND
-        substr("time",1,7)=to_char(sysdate,'yyyy-mm')
+        substr("time",1,7)=to_char(sysdate,'yyyy-mm') ORDER BY "time"
     </select>
     <select id="getRewardPunish" resultType="com.xyy.model.RewardAanPunish">
-        SELECT R.*,E.e_name FROM T_R_AND_P R,T_EMPLOYEE E WHERE E."e_id"=R."e_id"
+        SELECT R.*,E."e_name" FROM T_R_AND_P R,T_EMPLOYEE E WHERE E."e_id"=R."e_id"
         AND R."r_and_p_no"=#{r_and_p_no}
+    </select>
+    <select id="getThisMonthRewardAndPunish" resultType="com.xyy.model.RewardAanPunish">
+        SELECT R.*,E."e_name" FROM T_R_AND_P R,T_EMPLOYEE E WHERE E."e_id"=R."e_id" AND
+        substr("time",1,7)=#{month} ORDER BY "time"
     </select>
 </mapper>

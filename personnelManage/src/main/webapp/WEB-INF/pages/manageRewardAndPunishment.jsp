@@ -19,17 +19,23 @@
 <body>
 <a href="gotoEmployeeHome">返回</a>
 <a href="createRewardPunish">新增奖惩</a>
+<br>
+<form method="post" action="chooseMonthForRP">
+    选择月份<input type="month" name="month">
+    <input type="submit" value="确定">
+</form>
+
 <div>
     <table>
         <caption>奖惩信息</caption>
         <tr>
-            <th>员工编号</th><th>员工姓名</th><th>奖惩类别</th><th>奖惩原因</th>
+            <th>奖惩编号</th><th>员工编号</th><th>员工姓名</th><th>奖惩类别</th><th>奖惩原因</th>
             <th>奖惩金额</th><th>奖惩时间</th><th>执行状态</th>
             <th>是否执行</th>
             <th>修改</th><th>删除</th>
         </tr>
         <c:forEach items="${rewardAanPunishList}" var="rewardPunish">
-            <tr>
+            <tr><td>${rewardPunish.r_and_p_no}</td>
                 <td>${rewardPunish.e_id}</td><td>${rewardPunish.e_name}</td>
                 <td>${rewardPunish.type}</td>
                 <td>${rewardPunish.reason}</td><td>${rewardPunish.money}</td>

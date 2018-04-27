@@ -64,9 +64,9 @@ public class RewardAanPunishController {
     @RequestMapping("/createRewardPunish")
     public String createRewardPunish(HttpSession session) throws Exception {
         List<Department> departmentPosition = departmentService.getDepartmentsAndPosition();
-        session.setAttribute("departmentPosition",departmentPosition);
+        session.setAttribute("departmentPosition", departmentPosition);
         List<Employee> employees = employeeService.getEmployees();
-        session.setAttribute("employees",employees);
+        session.setAttribute("employees", employees);
         return "createRewardPunish";
     }
 
@@ -93,29 +93,29 @@ public class RewardAanPunishController {
     }
 
     @RequestMapping("/updateRewardPunish")
-    public void updateRewardPunish(RewardAanPunish rewardAanPunish,String money,HttpServletResponse response) throws Exception {
+    public void updateRewardPunish(RewardAanPunish rewardAanPunish, String money, HttpServletResponse response) throws Exception {
         rewardAanPunish.setMoney(Double.parseDouble(money));
-        if(rewardAanPunishService.updateRewardPunish(rewardAanPunish)){
+        if (rewardAanPunishService.updateRewardPunish(rewardAanPunish)) {
             response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('修改成功'));" +
                     "window.location.href='manageRewardAndPunishment';</script>");
         } else {
             response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('修改失败'));" +
-                    "window.location.href='alterRewardPunish?r_and_p_no="+rewardAanPunish.getR_and_p_no()+"';</script>");
+                    "window.location.href='alterRewardPunish?r_and_p_no=" + rewardAanPunish.getR_and_p_no() + "';</script>");
 
         }
     }
 
     @RequestMapping("/deleteRewardPunish")
-    public void deleteRewardPunish(RewardAanPunish rewardAanPunish,HttpServletResponse response) throws Exception {
+    public void deleteRewardPunish(RewardAanPunish rewardAanPunish, HttpServletResponse response) throws Exception {
         response.getWriter().write("<script language='javascript'>if( confirm(decodeURIComponent('确定要删除吗？'))){" +
-                "window.location.href ='confirmDeleteRewardPunish?r_and_p_no="+rewardAanPunish.getR_and_p_no()+
+                "window.location.href ='confirmDeleteRewardPunish?r_and_p_no=" + rewardAanPunish.getR_and_p_no() +
                 "';}else {window.location.href ='manageRewardAndPunishment';} </script>");
 
     }
 
     @RequestMapping("/confirmDeleteRewardPunish")
-    public void confirmDeleteRewardPunish(RewardAanPunish rewardAanPunish,HttpServletResponse response) throws Exception {
-        if(rewardAanPunishService.deleteRewardPunish(rewardAanPunish)){
+    public void confirmDeleteRewardPunish(RewardAanPunish rewardAanPunish, HttpServletResponse response) throws Exception {
+        if (rewardAanPunishService.deleteRewardPunish(rewardAanPunish)) {
             response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('删除成功'));" +
                     "window.location.href='manageRewardAndPunishment';</script>");
         } else {
@@ -124,4 +124,12 @@ public class RewardAanPunishController {
 
         }
     }
+
+    @RequestMapping("/chooseMonthForRP")
+    public String chooseMonthForRP(String month, Model model) throws Exception {
+        List<RewardAanPunish> rewardAanPunishes = rewardAanPunishService.getThisMonthRewardAndPunish(month);
+        model.addAttribute(rewardAanPunishes);
+        return "manageRewardAndPunishment";
+    }
+
 }

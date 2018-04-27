@@ -156,7 +156,7 @@
             <th>身份证号</th><th>手机号</th><th>电子邮箱</th><th>入职时间</th>
             <th>在职状态</th><th>教育背景</th><th>离职时间</th><th>离职原因</th>
             <th>所在部门</th><th>职位</th><th>权限级别</th>
-            <th>调职</th><th>离职</th><th>调级</th>
+            <th>调职</th><th>离职</th><th>调级</th><th>转正</th>
         </tr>
         <c:forEach items="${sessionScope.employees}" var="employee">
             <tr>
@@ -171,6 +171,11 @@
                 <td><a href="changePosition?e_id=${employee.e_id}">调职</a></td>
                 <td><span id="${employee.e_id}" onclick="dimission(this)" style="text-decoration: underline;color: blue">离职</span></td>
                 <td><a href="changeGrade?e_id=${employee.e_id}&grade=${employee.grade}">调级</a></td>
+                <td>
+                    <c:if test="${employee.state=='试用期'}">
+                        <a href="changeToNormal?e_id=${employee.e_id}&grade=${employee.grade}">转正</a>
+                    </c:if>
+                </td>
             </tr>
         </c:forEach>
     </table>

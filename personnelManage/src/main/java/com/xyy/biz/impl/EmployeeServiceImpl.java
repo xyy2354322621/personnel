@@ -63,4 +63,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<Employee> getJoinTrainEmployees(Train train) {
         return employeeMapper.getJoinTrainEmployees( train) ;
     }
+
+    @Override
+    public boolean updateChangeToNormal(Employee employee) {
+        return employeeMapper.updateChangeToNormal(employee);
+    }
+
+    @Override
+    public List<Employee> getNormalEmployees() {
+        return employeeMapper.getNormalEmployees();
+    }
 }

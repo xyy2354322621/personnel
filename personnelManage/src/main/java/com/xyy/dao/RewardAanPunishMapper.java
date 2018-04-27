@@ -21,4 +21,6 @@ public interface RewardAanPunishMapper {
     boolean updateRewardPunish(RewardAanPunish rewardAanPunish);
 
     boolean deleteRewardPunish(RewardAanPunish rewardAanPunish);
+
+    List<RewardAanPunish> getThisMonthRewardAndPunish(String month);
 }

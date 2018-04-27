@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xyy.dao.BasicParamMapper">
+    <insert id="addBasicParam">
+        INSERT INTO T_BASIC_PARAM("b_attend_time","b_leave_time") VALUES ('09:00','17:00')
+    </insert>
+    <update id="updateBasicParam">
+        UPDATE T_BASIC_PARAM SET "b_attend_time"=#{b_attend_time},"b_leave_time"=#{b_leave_time},
+        "b_overtime_limit"=#{b_overtime_limit},"b_attend_time_limit"=#{b_attend_time_limit},
+        "b_leave_time_limit"=#{b_leave_time_limit},"b_social_security_ratio"=#{b_social_security_ratio},
+        "b_housing_fund_ratio"=#{b_housing_fund_ratio},"b_unit_penalty"=#{b_unit_penalty},
+        "b_overtime_reward_radio"=#{b_overtime_reward_radio}
+    </update>
+    <select id="getBasicParam" resultType="com.xyy.model.BasicParam">
+        SELECT * FROM T_BASIC_PARAM
+    </select>
+</mapper>

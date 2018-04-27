@@ -52,5 +52,10 @@ public class RewardAanPunishServiceImpl implements RewardAanPunishService {
         return rewardAanPunishMapper.deleteRewardPunish(rewardAanPunish);
     }
 
+    @Override
+    public List<RewardAanPunish> getThisMonthRewardAndPunish(String month) {
+        return rewardAanPunishMapper.getThisMonthRewardAndPunish(month);
+    }
+
 
 }

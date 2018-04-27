@@ -36,24 +36,21 @@
             var index = data.selectedIndex;
             var depart_name=data.options[index].innerText;
             <c:forEach items="${sessionScope.employees}" var="emp">
-                if (depart_name=='${emp.depart_name}')
-                    alert(123);
+                if (depart_name=="${emp.depart_name}"){
                     var posEmp = document.createElement("option");
                     posEmp.value=${emp.e_id};
                     posEmp.innerHTML="${emp.e_name}";
                     empSelect.appendChild(posEmp);
+                }
             </c:forEach>
         }
         </c:forEach>
     }
 
-    function posSelect(data) {
-        alert(2222);
+    function posSelectChange(data) {
         var empSelect = document.getElementById("empSelect");
         empSelect.options.length=0;
-
         <c:forEach items="${sessionScope.employees}" var="emp">
-        alert(111)
             if (data.value==${emp.pos_no}){
             var posEmp = document.createElement("option");
             posEmp.value=${emp.e_id};
@@ -63,19 +60,7 @@
         </c:forEach>
     }
 
-    window.onload = function () {
-        var empSelect = document.getElementById("empSelect");
-        var posSelect = document.getElementById("dpt");
-        var pos_no = posSelect.value;
-        <c:forEach items="${sessionScope.employees}" var="emp">
-            if (pos_no==${emp.pos_no}){
-                var posEmp = document.createElement("option");
-                posEmp.value=${emp.e_id};
-                posEmp.innerHTML="${emp.e_name}";
-                empSelect.appendChild(posEmp);
-            }
-        </c:forEach>
-    }
+
     </script>
 </head>
 <body>
@@ -89,13 +74,18 @@
             <option value="${depart.depart_no}">${depart.depart_name}</option>
         </c:forEach>
     </select>
-        职位：<select id="posSelect" onchange="posSelect(this)" name="pos_no">
+        职位：<select id="posSelect" onchange="posSelectChange(this)" name="pos_no">
+            <option></option>
         <c:forEach items="${sessionScope.departmentPosition[0].positionSet}" var="pos">
             <option value="${pos.pos_no}">${pos.pos_name}</option>
         </c:forEach>
     </select>
         员工：<select id="empSelect" name="e_id">
-
+        <c:forEach items="${sessionScope.employees}" var="emp">
+            <c:if test="${emp.depart_name==sessionScope.departmentPosition[0].depart_name}">
+                <option value="${emp.e_id}">${emp.e_name}</option>
+            </c:if>
+        </c:forEach>
     </select>选择被奖惩员工<br>
         奖惩类别：
         <select name="type">

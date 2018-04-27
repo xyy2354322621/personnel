@@ -140,6 +140,20 @@ public class EmployeeController {
         }
     }
 
+    @RequestMapping("/changeToNormal")
+    public void changeToNormal(Employee employee,HttpServletResponse response)throws Exception{
+        response.setContentType("text/html;charset=utf-8");
+        if (employeeService.updateChangeToNormal(employee)){
+            response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('转正成功'));" +
+                    "window.location.href='manageEmployee?';</script>");
+        }else {
+            response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('转正失败，请重试'));" +
+                    "window.location.href='manageEmployee?';</script>");
+
+        }
+    }
+
+
     @RequestMapping("/changePosition")
     public String changePosition(Employee employee ,HttpSession session)throws Exception{
         session.setAttribute("changePositionEmployee",employee);

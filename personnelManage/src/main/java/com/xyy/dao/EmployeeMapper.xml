@@ -26,6 +26,9 @@
         where "e_id"=#{e_id}
 
     </update>
+    <update id="updateChangeToNormal">
+        UPDATE T_EMPLOYEE SET "state"='正式员工' WHERE "e_id"=#{e_id}
+    </update>
     <select id="getEmployee" resultType="com.xyy.model.Employee">
         SELECT * FROM T_EMPLOYEE WHERE "e_id"=#{e_id} and "dimission_time" is null
     </select>
@@ -47,5 +50,11 @@
          SELECT E.*,D."depart_name",P."pos_name" FROM T_EMPLOYEE E ,T_DEPARTMENT D ,T_POSITION P ,T_TRAIN_RECORD R
         WHERE D."depart_no"=P."depart_no" AND P."pos_no"=E."pos_no" AND R."e_id"=E."e_id" AND R."train_no"=#{train_no}
         ORDER BY "depart_name","pos_name"
+    </select>
+    <select id="getNormalEmployees" resultType="com.xyy.model.Employee">
+        SELECT E.*,D."depart_name",P."pos_name" FROM T_EMPLOYEE E ,T_DEPARTMENT D ,T_POSITION P
+        WHERE D."depart_no"=P."depart_no" AND P."pos_no"=E."pos_no" AND E."dimission_time" IS NULL
+        ORDER BY "depart_name","pos_name"
+
     </select>
 </mapper>

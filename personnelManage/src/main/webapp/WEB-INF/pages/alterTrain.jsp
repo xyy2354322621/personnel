@@ -15,23 +15,23 @@
     <base href="<%=basePath%>"/>
     <title></title>
 </head>
+
+<body>
 <a href="managePosition">返回</a>
 
 <fieldset>
     <legend>修改培训</legend>
     <form action="updateTrain" method="get">
         <input type="hidden" name="train_no" value="${train.train_no}">
-        培训名称：<input name="train_name" type="text" value="${train.train_name}"><br>
+        培训主题：<input name="train_name" type="text" value="${train.train_name}"><br>
         培训地点：<input name="train_address" type="text" value="${train.train_address}"><br>
         开始时间：<input name="start_time" type="datetime-local" value="${train.start_time}"><br>
         结束时间：<input name="end_time" type="datetime-local" value="${train.end_time}"><br>
         培训备注：（培训的内容及要求，对象等）<br>
-        <textarea name="message"  ></textarea><br>
+        <textarea name="message"  >${train.message}</textarea><br>
         <input type="submit" value="修改">
         <input type="reset" value="重置">
     </form>
 </fieldset>
-<body>
-
 </body>
 </html>
