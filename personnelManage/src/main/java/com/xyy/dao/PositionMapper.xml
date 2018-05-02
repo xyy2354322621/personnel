@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xyy.dao.PositionMapper">
     <insert id="addPosition">
-        INSERT INTO T_POSITION VALUES (POSITION_SEQ.nextval,#{position},#{depart_no},#{basic_salary},#{exist})
+        INSERT INTO T_POSITION VALUES (POSITION_SEQ.nextval,#{pos_name},#{depart_no},#{basic_salary},#{exist})
     </insert>
     <update id="updatePosition">
         UPDATE T_POSITION SET "position"=#{position},"basic_salary"=#{basic_salary} where "pos_no"=#{pos_no}
@@ -36,6 +36,12 @@
     <select id="getRecoverPosition" resultType="com.xyy.model.Position">
         SELECT P.* FROM T_DEPARTMENT D ,T_POSITION P WHERE D."depart_no"=P."depart_no"
         AND D."exist"=1 AND P."pos_no"=#{pos_no}
+    </select>
+    <select id="getEmpPosition" resultType="com.xyy.model.Position">
+        SELECT * FROM T_POSITION WHERE "pos_no"=#{pos_no}
+    </select>
+    <select id="getPositionByPosNo" resultType="com.xyy.model.Position">
+        SELECT * FROM T_POSITION WHERE "pos_no"=#{pos_no}
     </select>
     <resultMap id="positionEmployee" type="Position">
         <id property="pos_no" column="pos_no"/>

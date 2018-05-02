@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xyy.dao.AttendApplyMapper">
+    <insert id="addAttendApply">
+        INSERT INTO T_ATTEND_APPLY("attend_apply_no","attend_no","forget_clock_in","forget_clock_out",
+        "person_leave","sick_leave","annual_leave","maternity_leave","marriage_leave","funeral_leave","approve")
+        VALUES (ATTEND_APPLY_SEQ.nextval,#{attend_no,jdbcType=NUMERIC},#{forget_clock_in,jdbcType=VARCHAR},
+        #{forget_clock_out,jdbcType=VARCHAR},#{person_leave,jdbcType=NUMERIC},
+        #{sick_leave,jdbcType=NUMERIC},#{annual_leave,jdbcType=NUMERIC},#{maternity_leave,jdbcType=NUMERIC},
+        #{marriage_leave,jdbcType=NUMERIC},#{funeral_leave,jdbcType=NUMERIC},#{approve,jdbcType=VARCHAR})
+    </insert>
+    <update id="updateAttendApply">
+        UPDATE T_ATTEND_APPLY SET "forget_clock_in"=#{forget_clock_in,jdbcType=VARCHAR},
+        "forget_clock_out"=#{forget_clock_out,jdbcType=VARCHAR},
+        "person_leave"=#{person_leave,jdbcType=NUMERIC},"sick_leave"=#{sick_leave,jdbcType=NUMERIC},
+        "annual_leave"=#{annual_leave,jdbcType=NUMERIC},
+        "maternity_leave"=#{maternity_leave,jdbcType=NUMERIC},
+        "marriage_leave"=#{marriage_leave,jdbcType=NUMERIC},
+        "funeral_leave"=#{funeral_leave,jdbcType=NUMERIC},
+        "approve"=#{approve,jdbcType=VARCHAR}
+        WHERE "attend_no"=#{attend_no,jdbcType=NUMERIC}
+    </update>
+    <update id="updateApplyLeave">
+        UPDATE T_ATTEND_APPLY SET "approve"=#{attendApply.approve},
+        <if test="vacation=='事假'">
+            "person_leave"=#{timeLong},"sick_leave"=0,"annual_leave"=0,"marriage_leave"=0,"maternity_leave"=0,"funeral_leave"=0
+        </if>
+        <if test="vacation=='病假'">
+            "person_leave"=0,"sick_leave"=#{timeLong},"annual_leave"=0,"marriage_leave"=0,"maternity_leave"=0,"funeral_leave"=0
+        </if>
+        <if test="vacation=='年假'">
+            "person_leave"=0,"sick_leave"=0,"annual_leave"=1,"marriage_leave"=0,"maternity_leave"=0,"funeral_leave"=0
+        </if>
+        <if test="vacation=='婚假'">
+            "person_leave"=0,"sick_leave"=0,"annual_leave"=0,"marriage_leave"=1,"maternity_leave"=0,"funeral_leave"=0
+        </if>
+        <if test="vacation=='产假'">
+            "person_leave"=0,"sick_leave"=0,"annual_leave"=0,"marriage_leave"=0,"maternity_leave"=1,"funeral_leave"=0
+        </if>
+        <if test="vacation=='丧假'">
+            "person_leave"=0,"sick_leave"=0,"annual_leave"=0,"marriage_leave"=0,"maternity_leave"=0,"funeral_leave"=1
+        </if>
+        WHERE "attend_no"=#{attendApply.attend_no}
+    </update>
+    <select id="getMyAttendApply" resultType="com.xyy.model.AttendApply">
+        SELECT * FROM T_ATTEND_APPLY WHERE "attend_no"=#{attend_no}
+    </select>
+    <select id="getMyThisMonthAttendApplies" resultType="com.xyy.model.AttendApply">
+        SELECT A.*,T."date",T."e_id" FROM T_ATTEND_APPLY A ,T_ATTENDANCE T WHERE A."attend_no"=T."attend_no" AND A."attend_no" IN
+        <foreach collection="myAttendances" item="attendance" index="index" open="(" close=")" separator=",">
+            #{attendance.attend_no}
+        </foreach>
+    </select>
+    <select id="getThisMonthAttendApplies" resultType="com.xyy.model.AttendApply">
+        SELECT A.*,T."date",T."e_id",E."e_name" FROM T_ATTEND_APPLY A ,T_ATTENDANCE T ,T_EMPLOYEE E
+        WHERE T."e_id"=E."e_id" AND A."attend_no"=T."attend_no" AND substr(T."date",1,7)=#{month}
+    </select>
+</mapper>

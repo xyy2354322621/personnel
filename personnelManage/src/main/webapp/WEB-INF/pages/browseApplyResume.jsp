@@ -62,7 +62,7 @@
                 <td>
                     <c:if test="${apply.interview=='同意面试'}">
                         <c:if test="${apply.hire!='录用'}">
-                            <a href="failInterview?apply_no=${apply.apply_no}&recruit_no=${apply.recruit_no}">失败</a>
+                            <a href="successInterview?apply_no=${apply.apply_no}&recruit_no=${apply.recruit_no}">成功</a>
                             <a href="failInterview?apply_no=${apply.apply_no}&recruit_no=${apply.recruit_no}">失败</a>
                         </c:if>
                     </c:if>

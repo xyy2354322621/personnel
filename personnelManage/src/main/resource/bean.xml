@@ -8,11 +8,23 @@
     <context:property-placeholder location="classpath:db.properties"/>
     <context:component-scan base-package="com.xyy"/>
 
-    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <!--<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="${jdbc.driver}"/>
         <property name="url" value="${jdbc.url}"/>
         <property name="username" value="${jdbc.user}"/>
         <property name="password" value="${jdbc.pass}"/>
+    </bean>-->
+
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${jdbc.driver}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="user" value="${jdbc.user}"/>
+        <property name="password" value="${jdbc.pass}"/>
+        <property name="maxPoolSize" value="100"/>
+        <property name="minPoolSize" value="5"/>
+        <!--<property name="checkoutTimeout" value="120"/>-->
+        <property name="acquireIncrement" value="10"/>
+        <property name="idleConnectionTestPeriod" value="120"/>
     </bean>
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -34,6 +46,7 @@
     <tx:advice id="interceptor" transaction-manager="transactionManager">
         <tx:attributes>
             <tx:method name="add*"/>
+            <tx:method name="get*"/>
             <tx:method name="update*"/>
             <tx:method name="delete*"/>
         </tx:attributes>

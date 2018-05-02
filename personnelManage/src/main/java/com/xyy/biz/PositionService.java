@@ -1,6 +1,7 @@
 package com.xyy.biz;
 
 import com.xyy.model.Department;
+import com.xyy.model.Employee;
 import com.xyy.model.Position;
 
 import java.util.List;
@@ -30,4 +31,8 @@ public interface PositionService {
     List<Position> getDepartPositions(Department department);
 
     Position getRecoverPosition(Position position);
+
+    Position getEmpPosition(Employee employee);
+
+    Position getPositionByPosNo(Position originPosition);
 }

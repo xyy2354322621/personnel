@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,27 +21,35 @@ public class TrainController {
     @Resource
     private TrainService trainService;
 
-    @RequestMapping("/manageTrain")
+    @RequestMapping("manageTrain")
     public String manageTrain(Model model) throws Exception {
         List<Train> trains = trainService.getTrains();
         model.addAttribute(trains);
         return "manageTrain";
     }
 
-    @RequestMapping("/createTrain")
+    @RequestMapping("createTrain")
     public String createTrain() throws Exception {
         return "createTrain";
     }
 
     @RequestMapping("/saveTrain")
     public void saveTrain(Train train, HttpServletResponse response) throws Exception {
-        if (trainService.addTrain(train)){
-            response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('培训新开成功'));" +
-                    "window.location.href='manageTrain';</script>");
-        }else {
-            response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('培训新开失败'));" +
-                    "window.location.href='manageTrain';</script>");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date start = format.parse(train.getStart_time().substring(0,10)+" "+train.getStart_time().substring(11,16));
+        Date end = format.parse(train.getEnd_time().substring(0,10)+" "+train.getEnd_time().substring(11,16));
+        if (start.getTime()<end.getTime()) {
+            if (trainService.addTrain(train)) {
+                response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('培训新开成功'));" +
+                        "window.location.href='manageTrain';</script>");
+            } else {
+                response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('培训新开失败'));" +
+                        "window.location.href='createTrain';</script>");
 
+            }
+        }else {
+            response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('结束时间不能早于开始时间'));" +
+                    "window.location.href='createTrain';</script>");
         }
     }
 

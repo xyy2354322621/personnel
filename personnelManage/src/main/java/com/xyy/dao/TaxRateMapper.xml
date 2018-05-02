@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xyy.dao.TaxRateMapper">
+    <insert id="addTaxRate">
+        INSERT INTO T_TAX_RATE VALUES (TAX_RATE_SEQ.nextval,#{low_money},#{high_money},
+        #{tax_rate},#{quick_deduction})
+    </insert>
+    <update id="updateTaxRate">
+        UPDATE T_TAX_RATE SET "low_money"=#{low_money},"high_money"=#{high_money},
+        "tax_rate"=#{tax_rate},"quick_deduction"=#{quick_deduction}
+         WHERE "tax_no"=#{tax_no}
+    </update>
+    <delete id="deleteTaxRate">
+        DELETE FROM T_TAX_RATE WHERE  "tax_no"=#{tax_no}
+    </delete>
+    <select id="getTaxRates" resultType="com.xyy.model.TaxRate">
+        SELECT * FROM T_TAX_RATE ORDER BY "high_money"
+    </select>
+    <select id="getThisTaxRate" resultType="com.xyy.model.TaxRate">
+        SELECT * FROM T_TAX_RATE WHERE "tax_no"=#{tax_no}
+    </select>
+</mapper>

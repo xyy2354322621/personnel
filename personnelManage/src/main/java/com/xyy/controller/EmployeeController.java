@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -41,13 +42,43 @@ public class EmployeeController {
     @Resource
     private RecruitService recruitService;
 
+    @Resource
+    private AttendanceService attendanceService;
+
+    @Resource
+    private BasicParamService basicParamService;
+
     @RequestMapping("/gotoEmployeeLogin")
     public String gotoEmployeeLogin()throws Exception{
         return "employeeLogin";
     }
 
     @RequestMapping("/gotoEmployeeHome")
-    public String gotoEmployeeHome()throws Exception{
+    public String gotoEmployeeHome(HttpSession session)throws Exception{
+        Employee employee = (Employee) session.getAttribute("employee");
+        Attendance myAttendance = attendanceService.getMyAttendance(employee);
+        BasicParam basicParam = basicParamService.getBasicParam();
+        int clockIn;
+        int clockOut;
+        if (myAttendance==null || myAttendance.getAttend_time()==null){
+            clockIn=0;
+        }else{
+            clockIn=1;
+        }
+        if (myAttendance==null || myAttendance.getLeave_time()==null){
+            clockOut=0;
+        }else{
+            clockOut=1;
+        }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date now = new Date();
+        String today = dateFormat.format(now);
+        Date leaveTime = timeFormat.parse(today+" 13:00");
+        long leaveTimeGap = now.getTime()-leaveTime.getTime();
+        session.setAttribute("leaveTimeGap",leaveTimeGap);
+        session.setAttribute("clockIn",clockIn);
+        session.setAttribute("clockOut",clockOut);
         return "employeeHome";
     }
 
@@ -57,6 +88,9 @@ public class EmployeeController {
         employee.setE_id(tourist.getTourist_no());
         employee = employeeService.getEmployee(employee);
         response.setContentType("text/html;charset=utf-8");
+        GregorianCalendar ca = new GregorianCalendar();
+        int am_pm = ca.get(GregorianCalendar.AM_PM);
+        session.setAttribute("am_pm",am_pm);
         if(employee==null){
             response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('账号不存在'));" +
                     "window.location.href='gotoEmployeeLogin';</script>");
@@ -164,10 +198,22 @@ public class EmployeeController {
     public void confirmPosition(Position position ,HttpSession session,HttpServletResponse response)throws Exception{
         response.setContentType("text/html;charset=utf-8");
         Employee changePositionEmployee = (Employee) session.getAttribute("changePositionEmployee");
+        changePositionEmployee = employeeService.getEmployee(changePositionEmployee);
+        ChangePos changePos = new ChangePos();
+        changePos.setE_id(changePositionEmployee.getE_id());
+        changePos.setOrigin_pos(changePositionEmployee.getPos_no());
+        changePos.setNew_pos(position.getPos_no());
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        changePos.setChange_date(format.format(new Date()));
         changePositionEmployee.setPos_no(position.getPos_no());
-        if(employeeService.updateChangePosition(changePositionEmployee)){
-            response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('调职成功'));" +
-                    "window.location.href='manageEmployee?';</script>");
+        if (employeeService.addChangePos(changePos)) {
+            if (employeeService.updateChangePosition(changePositionEmployee)) {
+                response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('调职成功'));" +
+                        "window.location.href='manageEmployee?';</script>");
+            } else {
+                response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('调职失败，请重试'));" +
+                        "window.location.href='manageEmployee?';</script>");
+            }
         }else {
             response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('调职失败，请重试'));" +
                     "window.location.href='manageEmployee?';</script>");

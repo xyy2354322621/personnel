@@ -7,6 +7,9 @@
         VALUES (#{phone},#{e_name},to_date(#{entry_time},'yyyy-mm-dd hh24:mi:ss'),#{gender},#{phone},#{email},#{pos_no},
         to_date(#{entry_time},'yyyy-mm-dd hh24:mi:ss'),#{id_no},#{education},#{state})
     </insert>
+    <insert id="addChangePos">
+        INSERT INTO T_CHANGE_POS VALUES (CHANGE_POS_SEQ.nextval,#{e_id},#{origin_pos},#{new_pos},#{change_date})
+    </insert>
     <update id="updateChangeGrade">
         UPDATE T_EMPLOYEE SET
          <if test="grade==1">
@@ -56,5 +59,13 @@
         WHERE D."depart_no"=P."depart_no" AND P."pos_no"=E."pos_no" AND E."dimission_time" IS NULL
         ORDER BY "depart_name","pos_name"
 
+    </select>
+    <select id="getThisMonthOnJobEmployees" resultType="com.xyy.model.Employee">
+        SELECT * FROM T_EMPLOYEE WHERE "dimission_time" IS NULL
+        OR substr("dimission_time",1,7)=#{month}
+    </select>
+    <select id="getThisMonthChangePos" resultType="com.xyy.model.ChangePos">
+        SELECT * FROM T_CHANGE_POS WHERE "e_id"=#{employee.e_id}
+        and substr("change_date",1,7)=#{month} ORDER BY "change_date"
     </select>
 </mapper>

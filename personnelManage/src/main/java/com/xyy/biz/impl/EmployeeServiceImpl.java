@@ -2,10 +2,7 @@ package com.xyy.biz.impl;
 
 import com.xyy.biz.EmployeeService;
 import com.xyy.dao.EmployeeMapper;
-import com.xyy.model.Department;
-import com.xyy.model.Employee;
-import com.xyy.model.Position;
-import com.xyy.model.Train;
+import com.xyy.model.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -72,5 +69,20 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Employee> getNormalEmployees() {
         return employeeMapper.getNormalEmployees();
+    }
+
+    @Override
+    public boolean addChangePos(ChangePos changePos) {
+        return employeeMapper.addChangePos(changePos);
+    }
+
+    @Override
+    public List<Employee> getThisMonthOnJobEmployees(String month) {
+        return employeeMapper.getThisMonthOnJobEmployees(month);
+    }
+
+    @Override
+    public List<ChangePos> getThisMonthChangePos(Employee employee, String month) {
+        return employeeMapper.getThisMonthChangePos(employee,month);
     }
 }

@@ -1,9 +1,6 @@
 package com.xyy.biz;
 
-import com.xyy.model.Department;
-import com.xyy.model.Employee;
-import com.xyy.model.Position;
-import com.xyy.model.Train;
+import com.xyy.model.*;
 
 import java.util.List;
 
@@ -32,4 +29,10 @@ public interface EmployeeService {
     boolean updateChangeToNormal(Employee employee);
 
     List<Employee> getNormalEmployees();
+
+    boolean addChangePos(ChangePos changePos);
+
+    List<Employee> getThisMonthOnJobEmployees(String curMonth);
+
+    List<ChangePos> getThisMonthChangePos(Employee employee, String curMonth);
 }

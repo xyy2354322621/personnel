@@ -11,7 +11,7 @@ public class RewardAanPunish {
     private String time;
     private String reason;
     private double money;
-    private String exist;
+    private int exist;
 
     public long getR_and_p_no() {
         return r_and_p_no;
@@ -69,11 +69,11 @@ public class RewardAanPunish {
         this.money = money;
     }
 
-    public String getExist() {
+    public int getExist() {
         return exist;
     }
 
-    public void setExist(String exist) {
+    public void setExist(int exist) {
         this.exist = exist;
     }
 }

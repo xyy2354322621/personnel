@@ -21,13 +21,108 @@
         </foreach>
         ) A
     </insert>
+    <insert id="addClockIn">
+        INSERT INTO T_ATTENDANCE("attend_no","e_id","attend_time","date")
+        VALUES (ATTEND_SEQ.nextval,#{e_id},to_char(sysdate,'HH24:mi:ss'),to_char(sysdate,'yyyy-mm-dd'))
+    </insert>
+    <insert id="addThisDayAttendance">
+        INSERT INTO T_ATTENDANCE("attend_no","e_id","date")
+        select ATTEND_SEQ.nextval,A.* from(
+        <foreach collection="employees" item="emp" index="index" separator="UNION ALL" >
+            SELECT
+            #{emp.e_id},#{date}
+            from dual
+        </foreach>
+        ) A
+    </insert>
+    <insert id="addMyAttendance">
+        INSERT INTO T_ATTENDANCE("attend_no","e_id","date")
+        VALUES (ATTEND_SEQ.nextval,#{e_id},to_char(sysdate,'yyyy-mm-dd'))
+    </insert>
+    <update id="updateVacation">
+        UPDATE T_ATTENDANCE SET
+        <if test="vacation=='事假'">
+            "person_leave"=#{vacationTime},"sick_leave"=0,"annual_leave"=0,"marriage_leave"=0,"maternity_leave"=0,"funeral_leave"=0,"absenteeism"=0
+        </if>
+        <if test="vacation=='病假'">
+            "person_leave"=0,"sick_leave"=#{vacationTime},"annual_leave"=0,"marriage_leave"=0,"maternity_leave"=0,"funeral_leave"=0,"absenteeism"=0
+        </if>
+        <if test="vacation=='年假'">
+            "person_leave"=0,"sick_leave"=0,"annual_leave"=1,"marriage_leave"=0,"maternity_leave"=0,"funeral_leave"=0,"absenteeism"=0
+        </if>
+        <if test="vacation=='婚假'">
+            "person_leave"=0,"sick_leave"=0,"annual_leave"=0,"marriage_leave"=1,"maternity_leave"=0,"funeral_leave"=0,"absenteeism"=0
+        </if>
+        <if test="vacation=='产假'">
+            "person_leave"=0,"sick_leave"=0,"annual_leave"=0,"marriage_leave"=0,"maternity_leave"=1,"funeral_leave"=0,"absenteeism"=0
+        </if>
+        <if test="vacation=='丧假'">
+            "person_leave"=0,"sick_leave"=0,"annual_leave"=0,"marriage_leave"=0,"maternity_leave"=0,"funeral_leave"=1,"absenteeism"=0
+        </if>
+        WHERE "attend_no"=#{param1.attend_no}
+</update>
+    <update id="setPublicVacation">
+        UPDATE T_ATTENDANCE SET
+            "public_leave"=1
+        WHERE "date"=#{date}
+    </update>
+    <update id="cancerPublicVacation">
+        UPDATE T_ATTENDANCE SET
+            "public_leave"=0
+        WHERE "date"=#{date}
+    </update>
+    <update id="clockInExist">
+        UPDATE T_ATTENDANCE SET "attend_time"=to_char(sysdate,'HH24:mi:ss')
+        WHERE "attend_no"=#{attend_no}
+    </update>
+    <update id="clockOut">
+        UPDATE T_ATTENDANCE SET "leave_time"=to_char(sysdate,'HH24:mi:ss')
+        WHERE "attend_no"=#{attend_no}
+    </update>
+    <update id="updateAttendance">
+        UPDATE T_ATTENDANCE SET "attend_time"=#{attend_time,jdbcType=VARCHAR},"leave_time"=#{leave_time,jdbcType=VARCHAR},
+        "be_late"=#{be_late,jdbcType=NUMERIC},"leave_early"=#{leave_early,jdbcType=NUMERIC},"overtime"=#{overtime,jdbcType=NUMERIC},
+        "person_leave"=#{person_leave,jdbcType=NUMERIC},"sick_leave"=#{sick_leave,jdbcType=NUMERIC},"annual_leave"=#{annual_leave,jdbcType=NUMERIC},
+        "maternity_leave"=#{maternity_leave,jdbcType=NUMERIC},"public_leave"=#{public_leave,jdbcType=NUMERIC},
+        "marriage_leave"=#{marriage_leave,jdbcType=NUMERIC},"funeral_leave"=#{funeral_leave,jdbcType=NUMERIC},
+        "absenteeism"=#{absenteeism,jdbcType=NUMERIC}
+         WHERE "attend_no"=#{attend_no,jdbcType=NUMERIC}
+    </update>
+    <update id="updateClockIn">
+        UPDATE T_ATTENDANCE SET "absenteeism"=#{absenteeism},"be_late"=#{be_late},"attend_time"=#{attend_time}
+         WHERE "attend_no"=#{attend_no}
+    </update>
+    <update id="updateClockOut">
+        UPDATE T_ATTENDANCE SET "absenteeism"=#{absenteeism},"leave_early"=#{leave_early},
+        "leave_time"=#{leave_time},"overtime"=#{overtime}
+         WHERE "attend_no"=#{attend_no}
+    </update>
     <select id="getTodayAttendance" resultType="com.xyy.model.Attendance">
         SELECT A.*,D."depart_no",D."depart_name",P."pos_no",P."pos_name",E."e_name"
          FROM T_DEPARTMENT D ,T_POSITION P ,T_EMPLOYEE E ,T_ATTENDANCE A
         WHERE D."depart_no"=P."depart_no" AND P."pos_no"=E."pos_no" AND E."e_id"=A."e_id"
-        AND A."date"=to_char(sysdate,'yyyy-mm-dd')
+        AND A."date"=to_char(sysdate,'yyyy-mm-dd') ORDER BY D."depart_no",P."pos_no"
     </select>
     <select id="getTomorrowAttendance" resultType="com.xyy.model.Attendance">
         SELECT * FROM T_ATTENDANCE WHERE "date"=to_char((sysdate+1),'yyyy-mm-dd')
+    </select>
+    <select id="getThisDateAttendance" resultType="com.xyy.model.Attendance">
+        SELECT A.*,D."depart_no",D."depart_name",P."pos_no",P."pos_name",E."e_name"
+         FROM T_DEPARTMENT D ,T_POSITION P ,T_EMPLOYEE E ,T_ATTENDANCE A
+        WHERE D."depart_no"=P."depart_no" AND P."pos_no"=E."pos_no" AND E."e_id"=A."e_id"
+        AND A."date"=#{date} ORDER BY D."depart_no",P."pos_no"
+    </select>
+    <select id="getMyAttendance" resultType="com.xyy.model.Attendance">
+        SELECT * FROM T_ATTENDANCE WHERE "date"=to_char(sysdate,'yyyy-mm-dd') AND "e_id"=#{e_id}
+    </select>
+    <select id="getMyThisMonthAttendances" resultType="com.xyy.model.Attendance">
+        SELECT * FROM T_ATTENDANCE WHERE "e_id"=#{employee.e_id} and substr("date",1,7)=#{month}
+        ORDER BY "date"
+    </select>
+    <select id="getAttendance" resultType="com.xyy.model.Attendance">
+        SELECT * FROM T_ATTENDANCE WHERE "attend_no"=#{attend_no}
+    </select>
+    <select id="getEmpThisDateAttendance" resultType="com.xyy.model.Attendance">
+        SELECT * FROM T_ATTENDANCE WHERE "e_id"=#{employees.e_id} and "date"=#{date}
     </select>
 </mapper>

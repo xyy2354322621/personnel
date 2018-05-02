@@ -151,4 +151,25 @@ public class Employee {
         this.pos_name = pos_name;
     }
 
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "e_id='" + e_id + '\'' +
+                ", e_name='" + e_name + '\'' +
+                ", birthday='" + birthday + '\'' +
+                ", gender='" + gender + '\'' +
+                ", phone='" + phone + '\'' +
+                ", email='" + email + '\'' +
+                ", pos_no=" + pos_no +
+                ", grade='" + grade + '\'' +
+                ", entry_time='" + entry_time + '\'' +
+                ", dimission_time='" + dimission_time + '\'' +
+                ", id_no='" + id_no + '\'' +
+                ", education='" + education + '\'' +
+                ", dimission_reason='" + dimission_reason + '\'' +
+                ", state='" + state + '\'' +
+                ", depart_name='" + depart_name + '\'' +
+                ", pos_name='" + pos_name + '\'' +
+                '}';
+    }
 }

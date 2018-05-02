@@ -27,7 +27,21 @@
     <a href="manageAttendance">考勤管理</a>
     <a href="manageRewardAndPunishment">奖惩管理</a>
     <a href="manageBasicParam">基本参数管理</a>
-
+    <a href="manageTaxRate">个税税率管理</a>
+    <br>
 </c:if>
+<c:if test="${sessionScope.clockIn==0 && sessionScope.leaveTimeGap<0}">
+    <a href="clockIn">上班打卡</a>
+</c:if>
+<c:if test="${sessionScope.clockIn==0 && sessionScope.leaveTimeGap>0}">
+    <a href="clockOut">下班打卡</a>
+</c:if>
+<c:if test="${sessionScope.clockIn!=0 && sessionScope.clockOut==0}">
+    <a href="clockOut">下班打卡</a>
+</c:if>
+<c:if test="${sessionScope.clockIn!=0 && sessionScope.clockOut!=0}">
+    <a href="clockOut">更新下班打卡</a>
+</c:if>
+<a href="browseMyAttendance">我的考勤</a>
 </body>
 </html>

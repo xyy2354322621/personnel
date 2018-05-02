@@ -44,7 +44,7 @@
             <option value="${pos.pos_no}">${pos.pos_name}</option>
         </c:forEach>
     </select>
-    <input type="submit">
+    <input type="submit" value="确定">
 </form>
 </body>
 </html>

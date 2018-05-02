@@ -2,9 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xyy.dao.RewardAanPunishMapper">
     <insert id="addRewardPunish">
-        INSERT INTO T_R_AND_P VALUES (R_AND_P_SEQ.nextval,#{e_id},#{type},#{time},
-        #{reason},#{money},1)
+        INSERT INTO T_R_AND_P VALUES (R_AND_P_SEQ.nextval,#{e_id,jdbcType=VARCHAR},#{type,jdbcType=VARCHAR},
+        #{time,jdbcType=VARCHAR},#{reason,jdbcType=VARCHAR},#{money,jdbcType=NUMERIC},1)
     </insert>
+
     <update id="updateCancerRewordPunish">
         UPDATE T_R_AND_P SET "exist"=0 WHERE "r_and_p_no"=#{r_and_p_no}
     </update>
@@ -29,5 +30,29 @@
     <select id="getThisMonthRewardAndPunish" resultType="com.xyy.model.RewardAanPunish">
         SELECT R.*,E."e_name" FROM T_R_AND_P R,T_EMPLOYEE E WHERE E."e_id"=R."e_id" AND
         substr("time",1,7)=#{month} ORDER BY "time"
+    </select>
+    <select id="getEmpThisMonthExistReward" resultType="com.xyy.model.RewardAanPunish">
+        SELECT * FROM T_R_AND_P WHERE "e_id"=#{employee.e_id} and "type"='奖励'
+        and substr("time",1,7)=#{month} and "exist"=1
+    </select>
+    <select id="getEmpThisMonthExistPunish" resultType="com.xyy.model.RewardAanPunish">
+        SELECT * FROM T_R_AND_P WHERE "e_id"=#{employee.e_id} and "type"='惩罚'
+        and substr("time",1,7)=#{month} and "exist"=1
+    </select>
+    <select id="getEmpTodayBeLatePunish" resultType="com.xyy.model.RewardAanPunish">
+        SELECT * FROM T_R_AND_P WHERE "e_id"=#{e_id} and "type"='惩罚' and "reason" like '%上班迟到%'
+        and substr("time",1,10)=to_char(sysdate,'yyyy-mm-dd')
+    </select>
+    <select id="getEmpTodayLeaveEarlyPunish" resultType="com.xyy.model.RewardAanPunish">
+        SELECT * FROM T_R_AND_P WHERE "e_id"=#{e_id} and "type"='惩罚' and "reason" like '%下班早退%'
+        and substr("time",1,10)=to_char(sysdate,'yyyy-mm-dd')
+    </select>
+    <select id="getEmpThisMonthOvertime" resultType="com.xyy.model.RewardAanPunish">
+        SELECT * FROM T_R_AND_P WHERE "e_id"=#{employee.e_id} and "type"='加班' and substr("time",1,7)=#{month}
+
+    </select>
+    <select id="getEmpTodayOvertime" resultType="com.xyy.model.RewardAanPunish">
+        SELECT * FROM T_R_AND_P WHERE "e_id"=#{e_id} and "type"='加班'
+        and substr("time",1,10)=to_char(sysdate,'yyyy-mm-dd')
     </select>
 </mapper>

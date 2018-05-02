@@ -22,6 +22,17 @@ public class Attendance {
     private int annual_leave;
     private int marriage_leave;
     private int maternity_leave;
+    private int public_leave;
+    private int funeral_leave;
+    private int absenteeism;
+
+    public int getAbsenteeism() {
+        return absenteeism;
+    }
+
+    public void setAbsenteeism(int absenteeism) {
+        this.absenteeism = absenteeism;
+    }
 
     public long getAttend_no() {
         return attend_no;
@@ -165,5 +176,48 @@ public class Attendance {
 
     public void setMaternity_leave(int maternity_leave) {
         this.maternity_leave = maternity_leave;
+    }
+
+    public int getPublic_leave() {
+        return public_leave;
+    }
+
+    public void setPublic_leave(int public_leave) {
+        this.public_leave = public_leave;
+    }
+
+    public int getFuneral_leave() {
+        return funeral_leave;
+    }
+
+    public void setFuneral_leave(int funeral_leave) {
+        this.funeral_leave = funeral_leave;
+    }
+
+    @Override
+    public String toString() {
+        return "Attendance{" +
+                "attend_no=" + attend_no +
+                ", e_id='" + e_id + '\'' +
+                ", e_name='" + e_name + '\'' +
+                ", depart_name='" + depart_name + '\'' +
+                ", pos_name='" + pos_name + '\'' +
+                ", depart_no=" + depart_no +
+                ", pos_no=" + pos_no +
+                ", attend_time='" + attend_time + '\'' +
+                ", leave_time='" + leave_time + '\'' +
+                ", date='" + date + '\'' +
+                ", be_late=" + be_late +
+                ", leave_early=" + leave_early +
+                ", overtime=" + overtime +
+                ", person_leave=" + person_leave +
+                ", sick_leave=" + sick_leave +
+                ", annual_leave=" + annual_leave +
+                ", marriage_leave=" + marriage_leave +
+                ", maternity_leave=" + maternity_leave +
+                ", public_leave=" + public_leave +
+                ", funeral_leave=" + funeral_leave +
+                ", absenteeism=" + absenteeism +
+                '}';
     }
 }

@@ -59,8 +59,10 @@
         function posSelect(date) {
             $("#empTable  tr:not(:first)").html("");
             var table = document.getElementById("empTable");
+            var depart = document.getElementById("dpt");
+            var index = depart.selectedIndex;
             <c:forEach items="${sessionScope.TrainEmployees}" var="emp">
-            if (date.value=="${emp.pos_no}"){
+                if (date.value=="${emp.pos_no}"){
                 var row = table.insertRow();
                 var cell1=row.insertCell();
                 var cell2=row.insertCell();

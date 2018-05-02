@@ -17,7 +17,7 @@
     <title></title>
 </head>
 <body>
-<a href="managePosition">返回</a>
+<a href="manageTrain">返回</a>
 
 <fieldset>
     <legend>新开培训</legend>

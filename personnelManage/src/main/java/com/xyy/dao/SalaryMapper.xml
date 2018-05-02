@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xyy.dao.SalaryMapper">
+    <insert id="addSalary">
+        INSERT INTO T_SALARY("salary_no","e_id","salary_month","payoff")
+        VALUES (SALARY_SEQ.nextval,#{e_id},#{salary_month},#{payoff})
+    </insert>
+    <update id="updateSalary">
+        UPDATE T_SALARY SET "reward_money"=#{reward_money,jdbcType=NUMERIC},
+        "punish_money"=#{punish_money,jdbcType=NUMERIC},"income_tax"=#{income_tax,jdbcType=NUMERIC},
+        "payoff"=#{payoff,jdbcType=VARCHAR},"performance"=#{performance,jdbcType=NUMERIC},
+        "social_security"=#{social_security,jdbcType=NUMERIC},
+        "company_social"=#{company_social,jdbcType=NUMERIC},"net_payroll"=#{net_payroll,jdbcType=NUMERIC},
+        "basic_salary"=#{basic_salary,jdbcType=NUMERIC},"overtime_pay"=#{overtime_pay,jdbcType=NUMERIC}
+        WHERE "salary_no"=#{salary_no}
+    </update>
+    <select id="getThisMonthSalary" resultType="com.xyy.model.Salary">
+        SELECT S.*,D."depart_no",D."depart_name",P."pos_no",P."pos_name",E."e_name"
+         FROM T_SALARY S ,T_EMPLOYEE E ,T_POSITION P ,T_DEPARTMENT D
+        WHERE S."e_id"=E."e_id" AND E."pos_no"=P."pos_no" AND P."depart_no"=D."depart_no" AND S."salary_month"=#{month}
+        ORDER BY D."depart_no",P."pos_no"
+    </select>
+    <select id="getEmpThisMonthSalary" resultType="com.xyy.model.Salary">
+        SELECT * FROM T_SALARY WHERE "salary_month"=#{month} AND "e_id"=#{employee.e_id}
+    </select>
+    <select id="getSalary" resultType="com.xyy.model.Salary">
+        SELECT * FROM T_SALARY WHERE "salary_no"=#{salary_no}
+    </select>
+</mapper>

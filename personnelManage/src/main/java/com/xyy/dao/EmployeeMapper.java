@@ -1,9 +1,7 @@
 package com.xyy.dao;
 
-import com.xyy.model.Department;
-import com.xyy.model.Employee;
-import com.xyy.model.Position;
-import com.xyy.model.Train;
+import com.xyy.model.*;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -32,4 +30,10 @@ public interface EmployeeMapper {
     boolean updateChangeToNormal(Employee employee);
 
     List<Employee> getNormalEmployees();
+
+    boolean addChangePos(ChangePos changePos);
+
+    List<Employee> getThisMonthOnJobEmployees(String month);
+
+    List<ChangePos> getThisMonthChangePos(@Param("employee") Employee employee,@Param("month")  String month);
 }

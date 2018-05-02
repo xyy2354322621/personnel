@@ -1,6 +1,8 @@
 package com.xyy.dao;
 
+import com.xyy.model.Employee;
 import com.xyy.model.RewardAanPunish;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -23,4 +25,17 @@ public interface RewardAanPunishMapper {
     boolean deleteRewardPunish(RewardAanPunish rewardAanPunish);
 
     List<RewardAanPunish> getThisMonthRewardAndPunish(String month);
+
+    List<RewardAanPunish> getEmpThisMonthExistReward(@Param("employee") Employee employee, @Param("month")String month);
+
+    List<RewardAanPunish> getEmpThisMonthExistPunish(@Param("employee") Employee employee, @Param("month")String month);
+
+    RewardAanPunish getEmpTodayBeLatePunish(Employee employee);
+
+    RewardAanPunish getEmpTodayLeaveEarlyPunish(Employee employee);
+
+    List<RewardAanPunish> getEmpThisMonthOvertime(@Param("employee") Employee employee, @Param("month")String month);
+
+    RewardAanPunish getEmpTodayOvertime(Employee employee);
+
 }

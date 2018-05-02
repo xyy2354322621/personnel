@@ -2,6 +2,7 @@ package com.xyy.biz.impl;
 
 import com.xyy.biz.RewardAanPunishService;
 import com.xyy.dao.RewardAanPunishMapper;
+import com.xyy.model.Employee;
 import com.xyy.model.RewardAanPunish;
 import org.springframework.stereotype.Service;
 
@@ -56,6 +57,37 @@ public class RewardAanPunishServiceImpl implements RewardAanPunishService {
     public List<RewardAanPunish> getThisMonthRewardAndPunish(String month) {
         return rewardAanPunishMapper.getThisMonthRewardAndPunish(month);
     }
+
+    @Override
+    public List<RewardAanPunish> getEmpThisMonthExistReward(Employee employee, String month) {
+        return rewardAanPunishMapper.getEmpThisMonthExistReward(employee,month);
+    }
+
+    @Override
+    public List<RewardAanPunish> getEmpThisMonthExistPunish(Employee employee, String month) {
+        return rewardAanPunishMapper.getEmpThisMonthExistPunish(employee,month);
+    }
+
+    @Override
+    public RewardAanPunish getEmpTodayBeLatePunish(Employee employee) {
+        return rewardAanPunishMapper.getEmpTodayBeLatePunish(employee);
+    }
+
+    @Override
+    public RewardAanPunish getEmpTodayLeaveEarlyPunish(Employee employee) {
+        return rewardAanPunishMapper.getEmpTodayLeaveEarlyPunish(employee);
+    }
+
+    @Override
+    public List<RewardAanPunish> getEmpThisMonthOvertime(Employee employee, String month) {
+        return rewardAanPunishMapper.getEmpThisMonthOvertime(employee,month);
+    }
+
+    @Override
+    public RewardAanPunish getEmpTodayOvertime(Employee employee) {
+        return rewardAanPunishMapper.getEmpTodayOvertime(employee);
+    }
+
 
 
 }

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -42,6 +43,9 @@ public class RecruitController {
 
     @RequestMapping("/recruit")
     public String recruit(HttpSession session) throws Exception {
+        GregorianCalendar ca = new GregorianCalendar();
+        int am_pm = ca.get(GregorianCalendar.AM_PM);
+        session.setAttribute("am_pm",am_pm);
         List<Recruit> recruits = recruitService.getIssuingRecruits();
         session.setAttribute("issuingRecruit", recruits);
         return "recruit";
