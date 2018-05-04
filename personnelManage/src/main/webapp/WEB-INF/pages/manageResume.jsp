@@ -19,6 +19,8 @@
 <body>
 <a href="createResume">创建简历</a>
 <a href="recruit">返回</a>
+<c:if test="${sessionScope.myResumes.size()>0}">
+
 
 <div>
     <table>
@@ -26,21 +28,22 @@
         <tr>
             <th>简历编号</th><th>姓名</th><th>生日</th>
             <th>身份证号</th><th>手机号</th><th>电子邮箱</th>
-            <th>教育背景</th><th>个人履历简绍</th><th>修改简历</th>
-            <th>删除简历</th>
+            <th>学历</th><th>毕业院校</th><th>经历详情</th>
+            <th>删除简历</th><th>修改简历</th>
         </tr>
         <c:forEach items="${sessionScope.myResumes}" var="resume">
             <tr>
                 <td>${resume.resume_no}</td><td>${resume.tourist_name}</td>
                 <td>${resume.birthday}</td><td>${resume.id_no}</td>
                 <td>${resume.phone}</td><td>${resume.email}</td>
-                <td>${resume.education}</td>
-                <td><a href="checkResume?resume_no=${resume.resume_no}">点击查看</a></td>
+                <td>${resume.education}</td><td>${resume.graduate_academy}</td>
+                <td><a href="scanResume?resume_no=${resume.resume_no}">点击查看</a></td>
                 <td><a href="alterResume?resume_no=${resume.resume_no}">修改简历</a></td>
                 <td><a href="deleteResume?resume_no=${resume.resume_no}">删除简历</a></td>
             </tr>
         </c:forEach>
     </table>
 </div>
+</c:if>
 </body>
 </html>

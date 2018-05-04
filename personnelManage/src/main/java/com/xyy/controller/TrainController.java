@@ -38,17 +38,22 @@ public class TrainController {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date start = format.parse(train.getStart_time().substring(0,10)+" "+train.getStart_time().substring(11,16));
         Date end = format.parse(train.getEnd_time().substring(0,10)+" "+train.getEnd_time().substring(11,16));
-        if (start.getTime()<end.getTime()) {
-            if (trainService.addTrain(train)) {
-                response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('培训新开成功'));" +
-                        "window.location.href='manageTrain';</script>");
+        Date now = new Date();
+        if (start.getTime()<now.getTime()) {
+            if (start.getTime() < end.getTime()) {
+                if (trainService.addTrain(train)) {
+                    response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('培训新开成功'));" +
+                            "window.location.href='manageTrain';</script>");
+                } else {
+                    response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('培训新开失败'));" +
+                            "window.location.href='createTrain';</script>");
+                }
             } else {
-                response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('培训新开失败'));" +
+                response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('结束时间不能早于开始时间'));" +
                         "window.location.href='createTrain';</script>");
-
             }
         }else {
-            response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('结束时间不能早于开始时间'));" +
+            response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('开始时间不能早于当前时间'));" +
                     "window.location.href='createTrain';</script>");
         }
     }
@@ -62,11 +67,20 @@ public class TrainController {
 
     @RequestMapping("/updateTrain")
     public void updateTrain(Train train, HttpServletResponse response) throws Exception {
-        if (trainService.updateTrain(train)){
-            response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('培训修改成功'));" +
-                    "window.location.href='manageTrain';</script>");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        Date start = format.parse(train.getStart_time().substring(0,10)+" "+train.getStart_time().substring(11,16));
+        Date end = format.parse(train.getEnd_time().substring(0,10)+" "+train.getEnd_time().substring(11,16));
+        Date now = new Date();
+        if (start.getTime()<now.getTime()) {
+            if (trainService.updateTrain(train)) {
+                response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('培训修改成功'));" +
+                        "window.location.href='manageTrain';</script>");
+            } else {
+                response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('培训修改失败'));" +
+                        "window.location.href='manageTrain';</script>");
+            }
         }else {
-            response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('培训修改失败'));" +
+            response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('开始时间不能早于当前时间'));" +
                     "window.location.href='manageTrain';</script>");
         }
     }

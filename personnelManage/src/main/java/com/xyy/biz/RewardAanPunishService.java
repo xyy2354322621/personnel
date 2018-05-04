@@ -37,4 +37,7 @@ public interface RewardAanPunishService {
 
     RewardAanPunish getEmpTodayOvertime(Employee employee);
 
+    RewardAanPunish getThisMonthSalaryReconsider(String reason);
+
+    List<RewardAanPunish> getEmpThisMonthExistRP(Employee employee, String month);
 }

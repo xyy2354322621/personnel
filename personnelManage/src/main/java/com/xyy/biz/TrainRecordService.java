@@ -1,5 +1,6 @@
 package com.xyy.biz;
 
+import com.xyy.model.Employee;
 import com.xyy.model.Train;
 import com.xyy.model.TrainRecord;
 
@@ -18,4 +19,8 @@ public interface TrainRecordService {
     TrainRecord getTrainRecord(TrainRecord trainRecord);
 
     boolean updateTrainRecord(TrainRecord trainRecord);
+
+    List<TrainRecord> getEmpTrainRecord(Employee employee);
+
+    TrainRecord getThisRecord(TrainRecord trainRecord);
 }

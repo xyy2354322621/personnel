@@ -1,5 +1,6 @@
 package com.xyy.dao;
 
+import com.xyy.model.Employee;
 import com.xyy.model.Train;
 import com.xyy.model.TrainRecord;
 import org.apache.ibatis.annotations.Param;
@@ -19,4 +20,8 @@ public interface TrainRecordMapper {
     TrainRecord getTrainRecord(TrainRecord trainRecord);
 
     boolean updateTrainRecord(TrainRecord trainRecord);
+
+    List<TrainRecord> getEmpTrainRecord(Employee employee);
+
+    TrainRecord getThisRecord(TrainRecord trainRecord);
 }

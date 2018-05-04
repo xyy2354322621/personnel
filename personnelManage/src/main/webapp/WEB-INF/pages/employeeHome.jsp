@@ -17,6 +17,10 @@
     <title></title>
 </head>
 <body>
+<c:if test="${sessionScope.train==0}">
+    您有新的培训通知未查看，请点击《我的培训》菜单查看
+</c:if>
+<br>
 <c:if test="${sessionScope.employee.grade!='0'}">
     <a href="manageDepartment">部门管理</a>
     <a href="managePosition">职位管理</a>
@@ -43,5 +47,9 @@
     <a href="clockOut">更新下班打卡</a>
 </c:if>
 <a href="browseMyAttendance">我的考勤</a>
+<a href="browseMySalary">我的工资</a>
+<a href="browseMyTrain">我的培训</a>
+<a href="browseMyRP">我的奖惩</a>
+<a href="browseDepartmentOps">公司部门职位</a>
 </body>
 </html>

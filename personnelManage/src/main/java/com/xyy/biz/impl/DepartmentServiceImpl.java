@@ -3,6 +3,7 @@ package com.xyy.biz.impl;
 import com.xyy.biz.DepartmentService;
 import com.xyy.dao.DepartmentMapper;
 import com.xyy.model.Department;
+import com.xyy.model.Employee;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -65,6 +66,11 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public List<Department> getManageDepartments() {
         return departmentMapper.getManageDepartments() ;
+    }
+
+    @Override
+    public Department getMyDepartPos(Employee employee) {
+        return departmentMapper.getMyDepartPos(employee);
     }
 
 

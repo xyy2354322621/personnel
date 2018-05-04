@@ -326,7 +326,7 @@ public class AttendanceController {
             myAttendance.setBe_late(timeGap);
             RewardAanPunish rewardAanPunish = new RewardAanPunish();
             rewardAanPunish.setE_id(employee.getE_id());
-            rewardAanPunish.setType("惩罚");
+            rewardAanPunish.setType("考勤惩罚");
             rewardAanPunish.setTime(format.format(now));
             rewardAanPunish.setReason("上班迟到"+timeGap+"分钟");
             rewardAanPunish.setExist(1);
@@ -447,10 +447,9 @@ public class AttendanceController {
             RewardAanPunish todayBeLatePunish = rewardAanPunishService.getEmpTodayBeLatePunish(employee);
             RewardAanPunish todayLeaveEarlyPunish = rewardAanPunishService.getEmpTodayLeaveEarlyPunish(employee);
             if (todayLeaveEarlyPunish==null){
-                System.out.println("第一次");
                 todayLeaveEarlyPunish = new RewardAanPunish();
                 todayLeaveEarlyPunish.setE_id(employee.getE_id());
-                todayLeaveEarlyPunish.setType("惩罚");
+                todayLeaveEarlyPunish.setType("考勤惩罚");
                 todayLeaveEarlyPunish.setTime(format.format(now));
                 todayLeaveEarlyPunish.setExist(1);
                 setLeaveEarlyPunishMoney(timeGap,session,todayLeaveEarlyPunish, myAttendance);
@@ -460,7 +459,6 @@ public class AttendanceController {
                     return false;
                 }
             }else {
-                System.out.println("迟到");
                 todayLeaveEarlyPunish.setTime(format.format(now));
                 todayLeaveEarlyPunish.setExist(1);
                 setLeaveEarlyPunishMoney(timeGap,session,todayLeaveEarlyPunish,myAttendance);
@@ -594,9 +592,21 @@ public class AttendanceController {
                     if (empThisDateAttendance!=null) {
                         if (empThisDateAttendance.getAttend_time() == null || empThisDateAttendance.getLeave_time() == null) {
                             empThisDateAttendance.setAbsenteeism(1);
-                            System.out.println(date);
+//                            RewardAanPunish empThisDateRP = rewardAanPunishService.getEmpThisDateAttendRP()
                             if (!attendanceService.updateAttendance(empThisDateAttendance)) return false;
                         }
+                        /*if (empThisDateAttendance.getAttend_time() != null && empThisDateAttendance.getLeave_time() != null
+                                && empThisDateAttendance.getPublic_leave()==1){
+                            if (empThisDateAttendance.getOvertime()<480){
+                                empThisDateAttendance.setOvertime(empThisDateAttendance.getOvertime()+480);
+                            }
+                            if (!attendanceService.updateAttendance(empThisDateAttendance)) return false;
+                        }
+                        if (empThisDateAttendance.getAttend_time() != null && empThisDateAttendance.getLeave_time() != null
+                                && empThisDateAttendance.getPublic_leave()!=1){
+                            empThisDateAttendance.setOvertime(0);
+                            if (!attendanceService.updateAttendance(empThisDateAttendance)) return false;
+                        }*/
                     }
                 }else {
                     break;

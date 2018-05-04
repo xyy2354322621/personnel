@@ -35,12 +35,17 @@
     <select id="getManageDepartments" resultType="com.xyy.model.Department">
         SELECT * FROM T_DEPARTMENT
     </select>
+    <select id="getMyDepartPos" resultType="com.xyy.model.Department">
+
+    </select>
     <resultMap id="departmentPosition" type="Department">
         <id property="depart_no" column="depart_no"/>
         <result property="depart_name" column="depart_name"/>
+        <result property="depart_location" column="depart_location"/>
         <collection property="positionSet" ofType="Position">
             <id property="pos_no" column="pos_no"/>
             <result property="pos_name" column="pos_name"/>
+            <result property="basic_salary" column="basic_salary"/>
         </collection>
     </resultMap>
 </mapper>

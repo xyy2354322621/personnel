@@ -2,6 +2,7 @@ package com.xyy.biz;
 
 import com.xyy.model.Apply;
 import com.xyy.model.Department;
+import com.xyy.model.Employee;
 
 import java.util.List;
 
@@ -29,4 +30,5 @@ public interface DepartmentService {
 
     List<Department> getManageDepartments();
 
+    Department getMyDepartPos(Employee employee);
 }

@@ -88,6 +88,15 @@ public class RewardAanPunishServiceImpl implements RewardAanPunishService {
         return rewardAanPunishMapper.getEmpTodayOvertime(employee);
     }
 
+    @Override
+    public RewardAanPunish getThisMonthSalaryReconsider(String reason) {
+        return rewardAanPunishMapper.getThisMonthSalaryReconsider(reason);
+    }
+
+    @Override
+    public List<RewardAanPunish> getEmpThisMonthExistRP(Employee employee, String month) {
+        return rewardAanPunishMapper.getEmpThisMonthExistRP(employee,month);
+    }
 
 
 }

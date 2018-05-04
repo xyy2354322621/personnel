@@ -55,6 +55,7 @@
                     var cell15=row.insertCell();
                     var cell16=row.insertCell();
                     var cell17=row.insertCell();
+                    var cell18=row.insertCell();
                     cell1.innerHTML="${salary.e_id}";
                     cell2.innerHTML="${salary.e_name}";
                     cell3.innerHTML="${salary.depart_name}";
@@ -71,7 +72,11 @@
                     cell14.innerHTML="${salary.company_social}";
                     cell15.innerHTML="${salary.net_payroll}";
                     cell16.innerHTML="${salary.payoff}";
-                    cell17.innerHTML="<input type='button' value='调整绩效' onclick='changePerformance(this)' id='pfm' name='${salary.salary_no}'>";
+                    if (${salary.payoff=='未发放'}){
+                        cell18.innerHTML="<a href='paySalary?salary_no=${salary.salary_no}'>发放</a>";
+                        cell17.innerHTML=
+                            "<input type='button' value='调整绩效' onclick='changePerformance(this)' name='${salary.salary_no}'>";
+                    }
                 }
                 </c:forEach>
             }
@@ -101,6 +106,7 @@
                 var cell15=row.insertCell();
                 var cell16=row.insertCell();
                 var cell17=row.insertCell();
+                var cell18=row.insertCell();
                 cell1.innerHTML="${salary.e_id}";
                 cell2.innerHTML="${salary.e_name}";
                 cell3.innerHTML="${salary.depart_name}";
@@ -117,7 +123,12 @@
                 cell14.innerHTML="${salary.company_social}";
                 cell15.innerHTML="${salary.net_payroll}";
                 cell16.innerHTML="${salary.payoff}";
-                cell17.innerHTML="<input type='button' value='调整绩效' onclick='changePerformance(this)' id='pfm' name='${salary.salary_no}'>";
+                if (${salary.payoff=='未发放'}){
+                    cell18.innerHTML="<a href='paySalary?salary_no=${salary.salary_no}'>发放</a>";
+                    cell17.innerHTML=
+                "<input type='button' value='调整绩效' onclick='changePerformance(this)' name='${salary.salary_no}'>";
+                }
+
             }
             </c:forEach>
         }
@@ -127,6 +138,8 @@
 <a href="gotoEmployeeHome">返回</a>
 <a href="createPrevMonthSalary">生成上月工资单</a>
 <a href="createCurMonthSalary">生成当月工资单</a>
+<a href="prevMonthSalaryReconsider">上月工资复议</a>
+<%--<a href="curMonthSalaryReconsider">当月工资复议</a>--%>
 <form method="post" action="manageSalary">
     选择月份<input type="month" name="month" value="${month}">
     <input type="submit" value="查看工资单">
@@ -150,7 +163,7 @@
             <th>计薪月份</th><th>基本薪资</th><th>当月绩效</th><th>加班费用</th>
             <th>当月奖励</th><th>当月惩罚</th><th>薪资总额</th><th>所得税</th>
             <th>个人应缴社保</th><th>公司代缴社保</th><th>实发工资</th><th>发放状态</th>
-            <th>调整绩效</th>
+            <th>调整绩效</th><th>薪资发放</th>
         </tr>
         <c:forEach items="${salaryList}" var="salary">
             <tr>
@@ -163,7 +176,16 @@
                 <td>${salary.income_tax}</td><td>${salary.social_security}</td>
                 <td>${salary.company_social}</td><td>${salary.net_payroll}</td>
                 <td>${salary.payoff}</td>
-                <td><input type="button" value="调整绩效" onclick="changePerformance(this)" id="pfm" name="${salary.salary_no}"></td>
+                <td>
+                    <c:if test="${salary.payoff=='未发放'}">
+                        <input type="button" value="调整绩效" onclick="changePerformance(this)" name="${salary.salary_no}">
+                    </c:if>
+                </td>
+                <td>
+                    <c:if test="${salary.payoff=='未发放'}">
+                        <a href="paySalary?salary_no=${salary.salary_no}">发放</a>
+                    </c:if>
+                </td>
             </tr>
         </c:forEach>
     </table>

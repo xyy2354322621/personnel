@@ -1,6 +1,7 @@
 package com.xyy.controller;
 
 import com.xyy.biz.TrainRecordService;
+import com.xyy.model.Employee;
 import com.xyy.model.Train;
 import com.xyy.model.TrainRecord;
 import org.springframework.stereotype.Controller;
@@ -102,5 +103,25 @@ public class TrainRecordController {
         }
     }
 
+    @RequestMapping("browseMyTrain")
+    public String browseMyTrain(HttpSession session)throws Exception{
+        Employee employee = (Employee) session.getAttribute("employee");
+        List<TrainRecord> myTrainRecord = trainRecordService.getEmpTrainRecord(employee);
+        session.setAttribute("myTrainRecord",myTrainRecord);
+        return "browseMyTrain";
+    }
+
+    @RequestMapping("scanTranInfo")
+    public void scanTranInfo(TrainRecord trainRecord,HttpServletResponse response)throws Exception{
+        trainRecord = trainRecordService.getThisRecord(trainRecord);
+        trainRecord.setScan(1);
+        if (trainRecordService.updateTrainRecord(trainRecord)){
+            response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('知悉通知发送成功'));" +
+                    "window.location.href='browseMyTrain';</script>");
+        } else {
+            response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('知悉通知发送失败，请重试'));" +
+                    "window.location.href='browseMyTrain';</script>");
+        }
+    }
 
 }

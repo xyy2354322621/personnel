@@ -38,4 +38,7 @@ public interface RewardAanPunishMapper {
 
     RewardAanPunish getEmpTodayOvertime(Employee employee);
 
+    RewardAanPunish getThisMonthSalaryReconsider(String reason);
+
+    List<RewardAanPunish> getEmpThisMonthExistRP(@Param("employee") Employee employee, @Param("month") String month);
 }

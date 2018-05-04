@@ -2,9 +2,10 @@ package com.xyy.controller;
 
 import com.xyy.biz.ApplyService;
 import com.xyy.biz.DepartmentService;
-import com.xyy.model.Apply;
 import com.xyy.model.Department;
+import com.xyy.model.Employee;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
@@ -161,5 +162,12 @@ public class DepartmentController {
             response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('部门删除失败'));" +
                     "window.location.href='manageDepartment';</script>");
         }
+    }
+
+    @RequestMapping("browseDepartmentOps")
+    public String browseMyDepartment(Model model)throws Exception{
+        List<Department> departOps = departmentService.getDepartmentsAndPosition();
+        model.addAttribute(departOps);
+        return "browseDepartmentOps";
     }
 }

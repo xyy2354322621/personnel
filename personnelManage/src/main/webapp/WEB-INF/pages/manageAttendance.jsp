@@ -150,8 +150,8 @@
 <body>
 
 <a href="gotoEmployeeHome">返回</a>
-<a href="createTodayAttendance">生成今日考勤</a>
-<a href="createTomorrowAttendance">生成明日考勤</a>
+<%--<a href="createTodayAttendance">生成今日考勤</a>--%>
+<%--<a href="createTomorrowAttendance">生成明日考勤</a>--%>
 <a href="createThisMonthAttendance">生成当月考勤</a>
 <a href="createNextMonthAttendance">生成下月考勤</a>
 <a href="tidyPrevMonthAttendance">整理上月考勤</a>

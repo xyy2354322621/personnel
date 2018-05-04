@@ -40,7 +40,7 @@ public class ResumeController {
         response.setContentType("text/html;charset=utf-8");
         Tourist tourist = (Tourist) session.getAttribute("tourist");
         if(tourist==null){
-            response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('您尚未登录，请先登录后发送'));" +
+            response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('您尚未登录，请先登录后查看'));" +
                     "window.location.href='recruit';</script>");
         }else {
             List<Resume> myResumes = resumeService.getMyResume(tourist);
@@ -55,13 +55,12 @@ public class ResumeController {
         return "manageResume";
     }
 
-    @RequestMapping("/saveResume")
+    @RequestMapping("saveResume")
     public void saveResume(Resume resume,HttpSession session, HttpServletResponse response)throws Exception{
         response.setContentType("text/html;charset=utf-8");
         Tourist tourist = (Tourist) session.getAttribute("tourist");
         resume.setTourist_no(tourist.getTourist_no());
         resume.setExist(1);
-        resume.setBirthday(resume.getBirthday().substring(0,10));
         if(resumeService.addResume(resume)){
             response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('简历创建成功'));" +
                     "window.location.href='manageResume';</script>");
@@ -71,42 +70,47 @@ public class ResumeController {
         }
     }
 
-    @RequestMapping("/checkResume")
+    @RequestMapping("checkResume")
     public String checkResume(Resume resume,HttpSession session)throws Exception{
         resume = getChosenResume(resume,session);
         session.setAttribute("checkResume",resume);
         return "checkResume";
     }
 
-    @RequestMapping("/scanResume")
+    @RequestMapping("scanResume")
     public String scanResume(Resume resume,HttpSession session)throws Exception{
         resume = getChosenResume(resume,session);
         session.setAttribute("scanResume",resume);
         return "scanResume";
     }
 
-    @RequestMapping("/alterResume")
+    @RequestMapping("alterResume")
     public String alterResume(Resume resume,HttpSession session)throws Exception{
-        resume = getChosenResume(resume,session);
+        resume = resumeService.getResume(resume);
         session.setAttribute("alterResume",resume);
         return "alterResume";
     }
 
-    @RequestMapping("/updateResume")
+    @RequestMapping("updateResume")
     public void updateResume(Resume resume,HttpSession session,HttpServletResponse response)throws Exception{
         response.setContentType("text/html;charset=utf-8");
-        Resume alterResume = (Resume) session.getAttribute("Resume");
+        Resume alterResume = (Resume) session.getAttribute("alterResume");
         resume.setResume_no(alterResume.getResume_no());
         resume.setTourist_no(alterResume.getTourist_no());
+        System.out.println(resume);
         if(resumeService.updateResume(resume)){
             response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('简历修改成功'));" +
                     "window.location.href='manageResume';</script>");
         }else {
+            session.setAttribute("alterResume",response);
             response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('简历修改失败,请重新修改'));" +
-                    "window.location.href='alterResume?resume_no="+resume.getResume_no()+"';</script>");
+                    "window.location.href='gotoAlterResume';</script>");
         }
     }
-
+    @RequestMapping("gotoAlterResume")
+    public String gotoAlterResume()throws Exception{
+        return "alterResume";
+    }
 
     @RequestMapping("/deleteResume")
     public void deleteResume(Resume resume,HttpSession session,HttpServletResponse response)throws Exception{

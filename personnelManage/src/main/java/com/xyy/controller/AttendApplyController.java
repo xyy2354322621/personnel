@@ -195,11 +195,13 @@ public class AttendApplyController {
         if ("上班忘打卡".equals(attendApply.getForget_clock_in())){
             attendance.setAttend_time(basicParam.getB_attend_time());
             attendance.setBe_late(0);
+            attendance.setAbsenteeism(0);
             attendApply.setForget_clock_in("已同意");
         }
         if ("下班忘打卡".equals(attendApply.getForget_clock_out())){
             attendance.setLeave_time(basicParam.getB_leave_time());
             attendance.setLeave_early(0);
+            attendance.setAbsenteeism(0);
             attendApply.setForget_clock_out("已同意");
         }
         if(attendApply.getPerson_leave()!=0){
@@ -288,6 +290,7 @@ public class AttendApplyController {
         BasicParam basicParam = basicParamService.getBasicParam();
         attendance.setAttend_time(basicParam.getB_attend_time());
         attendance.setBe_late(0);
+        attendance.setAbsenteeism(0);
         String month = (String) session.getAttribute("curMonth");
         if (attendanceService.updateAttendance(attendance)) {
             attendApply.setForget_clock_in("已同意");
@@ -311,6 +314,7 @@ public class AttendApplyController {
         BasicParam basicParam = basicParamService.getBasicParam();
         attendance.setLeave_time(basicParam.getB_leave_time());
         attendance.setLeave_early(0);
+        attendance.setAbsenteeism(0);
         String month = (String) session.getAttribute("curMonth");
         if (attendanceService.updateAttendance(attendance)) {
             attendApply.setForget_clock_out("已同意");

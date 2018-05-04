@@ -14,18 +14,57 @@
 <head>
     <base href="<%=basePath%>"/>
     <title></title>
+    <style type="text/css">
+        .body{
+            margin: 0 auto;
+            width: 900px;
+            background-image: url(img/body.png);
+            background-size: 100% auto;
+        }
+        table{
+            /*border: 2px solid gray;*/
+            /*height: 300px;*/
+            margin: 50px auto;
+            padding: 10px;
+        }
+        input{
+            margin: 5px;
+        }
+        .button{
+            margin: 5px 3px;
+            width: 75px;
+        }
+        .top{
+            height: 150px;
+            margin: 0 auto;
+            width: 900px;
+            background-image: url(img/top.jpg);
+            background-size: 100% auto;
+        }
+        .bottom{
+            height: 150px;
+        }
+    </style>
+
 </head>
 <body>
-<a href="manageDepartment">返回</a>
+<div class="body">
+    <div class="top"></div>
+    <table>
+        <tr><th>创建部门</th></tr>
+        <tr><td>
+            <form action="saveDepartment" method="post">
+                部门名称：<input name="depart_name" type="text" autofocus required><br>
+                部门地址：<input name="depart_location" type="text"><br>
+                <input type="submit" value="创建" class="button">
+                <input type="reset" value="重置" class="button">
+                <a href="manageDepartment"><input type="button" value="返回" class="button"></a>
 
-<fieldset>
-    <legend>创建部门</legend>
-    <form action="saveDepartment" method="get">
-        部门名称：<input name="depart_name" type="text" autofocus><br>
-        部门地址：<input name="depart_location" type="text" ><br>
-        <input type="submit" value="创建">
-        <input type="reset" value="重置">
-    </form>
-</fieldset>
+            </form>
+        </td></tr>
+
+    </table>
+    <div class="bottom"></div>
+</div>
 </body>
 </html>

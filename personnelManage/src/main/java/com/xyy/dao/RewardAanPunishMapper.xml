@@ -32,19 +32,19 @@
         substr("time",1,7)=#{month} ORDER BY "time"
     </select>
     <select id="getEmpThisMonthExistReward" resultType="com.xyy.model.RewardAanPunish">
-        SELECT * FROM T_R_AND_P WHERE "e_id"=#{employee.e_id} and "type"='奖励'
+        SELECT * FROM T_R_AND_P WHERE "e_id"=#{employee.e_id} and "type" like '%奖励%'
         and substr("time",1,7)=#{month} and "exist"=1
     </select>
     <select id="getEmpThisMonthExistPunish" resultType="com.xyy.model.RewardAanPunish">
-        SELECT * FROM T_R_AND_P WHERE "e_id"=#{employee.e_id} and "type"='惩罚'
+        SELECT * FROM T_R_AND_P WHERE "e_id"=#{employee.e_id} and "type" like '%惩罚%'
         and substr("time",1,7)=#{month} and "exist"=1
     </select>
     <select id="getEmpTodayBeLatePunish" resultType="com.xyy.model.RewardAanPunish">
-        SELECT * FROM T_R_AND_P WHERE "e_id"=#{e_id} and "type"='惩罚' and "reason" like '%上班迟到%'
+        SELECT * FROM T_R_AND_P WHERE "e_id"=#{e_id} and "type"='考勤惩罚' and "reason" like '%上班迟到%'
         and substr("time",1,10)=to_char(sysdate,'yyyy-mm-dd')
     </select>
     <select id="getEmpTodayLeaveEarlyPunish" resultType="com.xyy.model.RewardAanPunish">
-        SELECT * FROM T_R_AND_P WHERE "e_id"=#{e_id} and "type"='惩罚' and "reason" like '%下班早退%'
+        SELECT * FROM T_R_AND_P WHERE "e_id"=#{e_id} and "type"='考勤惩罚' and "reason" like '%下班早退%'
         and substr("time",1,10)=to_char(sysdate,'yyyy-mm-dd')
     </select>
     <select id="getEmpThisMonthOvertime" resultType="com.xyy.model.RewardAanPunish">
@@ -52,7 +52,13 @@
 
     </select>
     <select id="getEmpTodayOvertime" resultType="com.xyy.model.RewardAanPunish">
-        SELECT * FROM T_R_AND_P WHERE "e_id"=#{e_id} and "type"='加班'
+        SELECT * FROM T_R_AND_P WHERE "e_id"=#{e_id} and "type"='加班奖励'
         and substr("time",1,10)=to_char(sysdate,'yyyy-mm-dd')
+    </select>
+    <select id="getThisMonthSalaryReconsider" resultType="com.xyy.model.RewardAanPunish">
+        SELECT * FROM T_R_AND_P WHERE "reason" LIKE '%${value}%'
+    </select>
+    <select id="getEmpThisMonthExistRP" resultType="com.xyy.model.RewardAanPunish">
+        SELECT * FROM T_R_AND_P WHERE "e_id"=#{employee.e_id} and substr("time",1,10)=#{month}
     </select>
 </mapper>

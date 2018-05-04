@@ -19,27 +19,30 @@
 <a href="manageResume">返回</a>
 <div>
     <table>
+        <caption>我的简历</caption>
         <tr>
-            <td>简历编号</td><td>${sessionScope.checkResume.resume_no}</td>
-            <td>姓名</td><td>${sessionScope.checkResume.tourist_name}</td>
+            <th>简历编号</th><th>姓名</th><th>生日</th>
+            <th>身份证号</th><th>手机号</th><th>电子邮箱</th>
+            <th>学历</th><th>毕业院校</th>
+            <th>删除简历</th><th>修改简历</th>
         </tr>
         <tr>
-            <td>生日</td><td>${sessionScope.checkResume.birthday}</td>
-            <td>身份证号</td><td>${sessionScope.checkResume.id_no}</td>
-        </tr>
-        <tr>
-            <td>电话</td><td>${sessionScope.scanResume.phone}</td>
-            <td>电子邮箱</td><td>${sessionScope.scanResume.email}</td>
-        </tr>
-        <tr>
-            <td>性别</td><td>${sessionScope.scanResume.gender}</td>
-            <td>学历背景</td><td>${sessionScope.scanResume.education}</td>
+            <td>${sessionScope.scanResume.resume_no}</td><td>${sessionScope.scanResume.tourist_name}</td>
+            <td>${sessionScope.scanResume.birthday}</td><td>${sessionScope.scanResume.id_no}</td>
+            <td>${sessionScope.scanResume.phone}</td><td>${sessionScope.scanResume.email}</td>
+            <td>${sessionScope.scanResume.education}</td><td>${sessionScope.scanResume.graduate_academy}</td>
+            <td><a href="alterResume?resume_no=${sessionScope.scanResume.resume_no}">修改简历</a></td>
+            <td><a href="deleteResume?resume_no=${sessionScope.scanResume.resume_no}">删除简历</a></td>
         </tr>
     </table>
-    <table>
-        <caption>履历简绍</caption>
-        <tr><td>${sessionScope.scanResume.introduction}</td></tr>
-    </table>
+    自我简绍：<br>
+    <textarea name="introduction">${sessionScope.scanResume.introduction}</textarea><br>
+    教育经历：<br>
+    <textarea name="education_background">${sessionScope.scanResume.education_background}</textarea><br>
+    工作经历：<br>
+    <textarea name="employment_record">${sessionScope.scanResume.employment_record}</textarea><br>
+    项目经验：<br>
+    <textarea name="project_experience">${sessionScope.scanResume.project_experience}</textarea><br>
     <a href="alterResume?resume_no=${sessionScope.scanResume.resume_no}">修改简历</a>
     <a href="deleteResume?resume_no=${sessionScope.scanResume.resume_no}">删除简历</a>
 </div>

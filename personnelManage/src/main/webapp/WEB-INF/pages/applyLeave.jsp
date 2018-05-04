@@ -33,24 +33,92 @@
             }
         }
     </script>
+    <style type="text/css">
+        .body{
+            margin: 0 auto;
+            width: 900px;
+            background-image: url(img/body.png);
+            background-size: 100% auto;
+        }
+        table{
+            /*border: 2px solid gray;*/
+            /*height: 300px;*/
+            margin: 10px auto;
+            padding: 10px;
+        }
+        input{
+            margin: 5px;
+        }
+        .button{
+            margin: 10px 15px;
+            width: 100px;
+        }
+        .top{
+            height: 150px;
+            margin: 0 auto;
+            width: 900px;
+            background-image: url(img/top.jpg);
+            background-size: 100% auto;
+        }
+        .bottom{
+            height: 150px;
+        }
+        textarea{
+            height: 150px;
+            width: 550px;
+        }
+        p{
+            width: 500px;
+            text-align: center;
+        }
+        span{
+            width: 35px;
+            display: inline-block;
+        }
+        .shot{
+            width: 15px;
+            display: inline-block;
+        }
+        .shot1{
+            width: 7px;
+            display: inline-block;
+        }
+        select{
+            width: 140px;
+        }
+        .input{
+            width: 183px;
+        }
+    </style>
+
 </head>
 <body>
-<a href="browseMyAttendance">返回</a>
-<div>
-    <form method="post" action="attendApplyLeave">
-        <input type="hidden" name="attend_no" value="${attendance.attend_no}">
-        <select id="vacation" name="vacation" onchange="vacationChange(this)">
-            <option value="事假">事假</option>
-            <option value="病假">病假</option>
-            <option value="年假">年假</option>
-            <option value="婚假">婚假</option>
-            <option value="产假">产假</option>
-            <option value="丧假">丧假</option>
-        </select>
-        请假时长：<input id="time" name="time" type="number" max="8" pattern="^[1-8].?\d?$" value="1" ><span id="unit">小时</span>
-        <input type="submit" value="确定">
-        <input type="reset" value="重置">
-    </form>
+<div class="body">
+    <div class="top"></div>
+    <table>
+        <tr><th>请假</th></tr>
+        <tr><td>
+            <form method="post" action="attendApplyLeave">
+                <input type="hidden" name="attend_no" value="${attendance.attend_no}">
+                <select id="vacation" name="vacation" onchange="vacationChange(this)">
+                    <option value="事假">事假</option>
+                    <option value="病假">病假</option>
+                    <option value="年假">年假</option>
+                    <option value="婚假">婚假</option>
+                    <option value="产假">产假</option>
+                    <option value="丧假">丧假</option>
+                </select>
+                请假时长：<input id="time" name="time" type="number" max="8" pattern="^[1-8].?\d?$" value="1" required><span id="unit">小时</span>
+                <br><input type="submit" value="确定" class="button">
+                <input type="reset" value="重置" class="button">
+                <a href="browseMyAttendance"><input type="button" value="返回" class="button"></a>
+
+            </form>
+
+        </td></tr>
+
+    </table>
+    <div class="bottom"></div>
 </div>
 </body>
 </html>

@@ -1,6 +1,7 @@
 package com.xyy.dao;
 
 import com.xyy.model.Department;
+import com.xyy.model.Employee;
 
 import java.util.List;
 
@@ -27,4 +28,6 @@ public interface DepartmentMapper {
     boolean updateRecoverDepartment(Department department);
 
     List<Department> getManageDepartments();
+
+    Department getMyDepartPos(Employee employee);
 }

@@ -2,6 +2,7 @@ package com.xyy.biz.impl;
 
 import com.xyy.biz.TrainRecordService;
 import com.xyy.dao.TrainRecordMapper;
+import com.xyy.model.Employee;
 import com.xyy.model.Train;
 import com.xyy.model.TrainRecord;
 import org.springframework.stereotype.Service;
@@ -40,5 +41,15 @@ public class TrainRecordServiceImpl implements TrainRecordService {
     @Override
     public boolean updateTrainRecord(TrainRecord trainRecord) {
         return trainRecordMapper.updateTrainRecord(trainRecord);
+    }
+
+    @Override
+    public List<TrainRecord> getEmpTrainRecord(Employee employee) {
+        return trainRecordMapper.getEmpTrainRecord(employee);
+    }
+
+    @Override
+    public TrainRecord getThisRecord(TrainRecord trainRecord) {
+        return trainRecordMapper.getThisRecord(trainRecord);
     }
 }

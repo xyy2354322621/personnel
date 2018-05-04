@@ -263,8 +263,13 @@ public class SalaryController {
     }
 
     private double computeThisDateBasicSalary(Attendance empThisDateAttendance, BasicParam basicParam, double daySalary) {
-        if (empThisDateAttendance.getPublic_leave()==1){
-            return daySalary;
+        /*if (empThisDateAttendance.getPublic_leave()==1 && empThisDateAttendance.getAttend_time()!=null
+                && empThisDateAttendance.getLeave_time() != null){
+            double formalSalary = daySalary*basicParam.getPublic_leave_pay_ratio()/100;
+            double overtimeSalary = daySalary*basicParam.getB_overtime_reward_radio()/100;
+            return formalSalary+overtimeSalary;
+        }else*/ if (empThisDateAttendance.getPublic_leave()==1){
+            return daySalary*basicParam.getPublic_leave_pay_ratio()/100;
         }else if (empThisDateAttendance.getFuneral_leave()==1){
             return daySalary*basicParam.getFuneral_leave_pay_ratio()/100;
         }else if (empThisDateAttendance.getMarriage_leave()==1){
@@ -273,10 +278,16 @@ public class SalaryController {
             return daySalary*basicParam.getMaternity_leave_pay_ratio()/100;
         }else if (empThisDateAttendance.getAnnual_leave()==1){
             return daySalary*basicParam.getAnnual_leave_pay_ratio()/100;
-        }else if (empThisDateAttendance.getSick_leave()==1){
-            return daySalary*basicParam.getSick_leave_pay_ratio()/100;
-        }else if (empThisDateAttendance.getPerson_leave()==1){
-            return daySalary*basicParam.getPerson_leave_pay_ratio()/100;
+        }else if (empThisDateAttendance.getSick_leave()!=0){
+            int workHour = 8-empThisDateAttendance.getSick_leave();
+            double workSalary = daySalary / 8 * workHour;
+            double leaveSalary = daySalary / 8 * empThisDateAttendance.getSick_leave()* basicParam.getSick_leave_pay_ratio()/100;
+            return workSalary + leaveSalary;
+        }else if (empThisDateAttendance.getPerson_leave()!=0){
+            int workHour = 8-empThisDateAttendance.getPerson_leave();
+            double workSalary = daySalary / 8 * workHour;
+            double leaveSalary = daySalary / 8 * empThisDateAttendance.getPerson_leave() * basicParam.getPerson_leave_pay_ratio()/100;
+            return workSalary + leaveSalary;
         }else if (empThisDateAttendance.getAbsenteeism()==1){
             return daySalary*basicParam.getMaternity_leave_pay_ratio()/100;
         }else {
@@ -305,5 +316,28 @@ public class SalaryController {
                     "window.location.href='manageSalary?month=" + salary.getSalary_month() + "';</script>");
         }
     }
+
+    @RequestMapping("paySalary")
+    public void paySalary(Salary salary,HttpServletResponse response)throws Exception{
+        salary = salaryService.getSalary(salary);
+        salary.setPayoff("已发放");
+        if (salaryService.updateSalary(salary)){
+            response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('发放成功'));" +
+                    "window.location.href='manageSalary?month=" + salary.getSalary_month() + "';</script>");
+        } else {
+            response.getWriter().write("<script language='javascript'>alert(decodeURIComponent('发放失败，请重试'));" +
+                    "window.location.href='manageSalary?month=" + salary.getSalary_month() + "';</script>");
+        }
+    }
+
+    @RequestMapping("browseMySalary")
+    public String browseMySalary(HttpSession session)throws Exception{
+        Employee employee = (Employee) session.getAttribute("employee");
+        List<Salary> mySalary = salaryService.getMySalaries(employee);
+        session.setAttribute("mySalary",mySalary);
+        return "browseMySalary";
+    }
+
+
 
 }

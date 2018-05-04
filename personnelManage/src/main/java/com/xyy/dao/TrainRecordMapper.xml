@@ -11,7 +11,7 @@
         </foreach>
     </insert>
     <update id="updateTrainRecord">
-        UPDATE T_TRAIN_RECORD SET "examine"=#{examine},"attend"=#{attend}
+        UPDATE T_TRAIN_RECORD SET "examine"=#{examine},"attend"=#{attend},"scan"=#{scan}
         where "train_record_no"=#{train_record_no}
     </update>
     <delete id="deleteTrainRecords">
@@ -25,5 +25,12 @@
     </select>
     <select id="getTrainRecord" resultType="com.xyy.model.TrainRecord">
         SELECT R.*,E."e_name" FROM T_TRAIN_RECORD R ,T_EMPLOYEE E WHERE R."e_id"=E."e_id" AND R."train_no"=#{train_no} and R."e_id"=#{e_id}
+    </select>
+    <select id="getEmpTrainRecord" resultType="com.xyy.model.TrainRecord">
+        SELECT * FROM T_TRAIN T ,T_TRAIN_RECORD R WHERE T."train_no"=R."train_no"
+        AND R."e_id"=#{e_id}
+    </select>
+    <select id="getThisRecord" resultType="com.xyy.model.TrainRecord">
+        SELECT * FROM T_TRAIN_RECORD WHERE "train_record_no"=#{train_record_no}
     </select>
 </mapper>

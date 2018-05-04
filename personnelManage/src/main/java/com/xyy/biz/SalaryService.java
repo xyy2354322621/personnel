@@ -18,4 +18,6 @@ public interface SalaryService {
     boolean updateSalary(Salary salary);
 
     Salary getSalary(Salary salary);
+
+    List<Salary> getMySalaries(Employee employee);
 }

@@ -26,4 +26,7 @@
     <select id="getSalary" resultType="com.xyy.model.Salary">
         SELECT * FROM T_SALARY WHERE "salary_no"=#{salary_no}
     </select>
+    <select id="getMySalaries" resultType="com.xyy.model.Salary">
+         SELECT * FROM T_SALARY WHERE "e_id"=#{e_id} ORDER BY "salary_month" desc
+    </select>
 </mapper>

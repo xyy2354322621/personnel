@@ -42,4 +42,9 @@ public class SalaryServiceImpl implements SalaryService {
     public Salary getSalary(Salary salary) {
         return salaryMapper.getSalary(salary);
     }
+
+    @Override
+    public List<Salary> getMySalaries(Employee employee) {
+        return salaryMapper.getMySalaries(employee);
+    }
 }

@@ -132,4 +132,16 @@ public class RewardAanPunishController {
         return "manageRewardAndPunishment";
     }
 
+    @RequestMapping("browseMyRP")
+    public String browseMyRP(String month, Model model,HttpSession session) throws Exception {
+        Employee employee = (Employee) session.getAttribute("employee");
+        if (month == null){
+            SimpleDateFormat monthFormat = new SimpleDateFormat("yyyy-MM");
+            month = monthFormat.format(new Date());
+        }
+        List<RewardAanPunish> myRewardAanPunish = rewardAanPunishService.getEmpThisMonthExistRP(employee,month);
+        model.addAttribute("myRP",myRewardAanPunish);
+        model.addAttribute("month",month);
+        return "browseMyRP";
+    }
 }

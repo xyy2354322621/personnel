@@ -48,6 +48,9 @@ public class EmployeeController {
     @Resource
     private BasicParamService basicParamService;
 
+    @Resource
+    private TrainRecordService trainRecordService;
+
     @RequestMapping("/gotoEmployeeLogin")
     public String gotoEmployeeLogin()throws Exception{
         return "employeeLogin";
@@ -74,8 +77,19 @@ public class EmployeeController {
         SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         Date now = new Date();
         String today = dateFormat.format(now);
-        Date leaveTime = timeFormat.parse(today+" 13:00");
+        Date leaveTime = timeFormat.parse(today+" 12:00");
         long leaveTimeGap = now.getTime()-leaveTime.getTime();
+        List<TrainRecord> trainRecords = trainRecordService.getEmpTrainRecord(employee);
+        int train = 1;
+        if (trainRecords.size()>0){
+            for (TrainRecord trainRecord:trainRecords){
+                if (trainRecord.getScan()==0){
+                    train=0;
+                    break;
+                }
+            }
+        }
+        session.setAttribute("train",train);
         session.setAttribute("leaveTimeGap",leaveTimeGap);
         session.setAttribute("clockIn",clockIn);
         session.setAttribute("clockOut",clockOut);
@@ -234,11 +248,18 @@ public class EmployeeController {
         }
     }
 
-    @RequestMapping("/positionEmployee")
+    @RequestMapping("positionEmployee")
     public String positionEmployee(Position position,HttpSession session){
         List<Employee> positionEmployees = employeeService.getPositionEmployees(position);
         session.setAttribute("positionEmployees",positionEmployees);
         return "positionEmployee";
+    }
+
+    @RequestMapping("posEmployee")
+    public String posEmployee(Position position,HttpSession session){
+        List<Employee> positionEmployees = employeeService.getPositionEmployees(position);
+        session.setAttribute("positionEmployees",positionEmployees);
+        return "posEmployee";
     }
 
     @RequestMapping("/departEmployee")
